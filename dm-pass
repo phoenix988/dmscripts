@@ -6,12 +6,17 @@
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 #                                     
 # -*- coding: utf-8 -*-
+#
 #Rofi script that will copy the choosen password to my pass database
+
+#Source the configuration file
+source .config/dm-script.conf
+
 list=$(find  $HOME/.password-store/ -iname "*.gpg" | sed -e 's/.gpg//g' -e 's/\/home\/karl\/.password-store//g' -e 's/\///')
 
 declare -a options=($list)
 
-choice=$(printf '%s\n' "${options[@]}" | rofi -dmenu -p "<" )
+choice=$(printf '%s\n' "${options[@]}" | run -p "<" )
 
 [ -z "$choice" ] && exit 
 

@@ -1,10 +1,17 @@
 #!/bin/bash
+source .config/dm-script.conf##____  _                      _      
+#|  _ \| |__   ___   ___ _ __ (_)_  __
+#| |_) | '_ \ / _ \ / _ \ '_ \| \ \/ /
+#|  __/| | | | (_) |  __/ | | | |>  < 
+#|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
+#                                     
+# -*- coding: utf-8 -*-
 
-#Gets your username to see if your root or not
+#Imports the configuration
+source .config/dm-script.conf
+
+#will check your username to see if your root or not
 whoami=$(whoami)
-
-#here you can create variables to use in the script
-gui_editor="neovide"
 
 #Choose the config files you want quick access to
 #Just add them in the array with this format "NAME - path_to_file"
@@ -82,7 +89,7 @@ if [ $whoami = "root" ] ; then
 
 
 #I use print to format the array 
-choice=$(printf '%s\n' "${!rootoptions[@]}" |  rofi -dmenu -p "Edit config file (You are root):" )
+choice=$(printf '%s\n' "${!rootoptions[@]}" |  run -p "Edit config file (You are root):" )
   
 #Exit if the choice variable is empty
 [ -z "$choice" ] && exit
@@ -90,13 +97,13 @@ choice=$(printf '%s\n' "${!rootoptions[@]}" |  rofi -dmenu -p "Edit config file 
 #This will fix the output so only the path to the file will get stored in the variable 
 selection=$(printf '%s\n' "${rootoptions["${choice}"]}" )
 
-[ \( $TERM = "xterm-color" \) -o \( $TERM = "xterm-256color" \) -o \( $TERM = "xterm-kitty" \) -o \( $TERM = "tmux-256color" \) ] && vim $selection || exec $gui_editor $selection
+[ \( $TERM = "xterm-color" \) -o \( $TERM = "xterm-256color" \) -o \( $TERM = "xterm-kitty" \) -o \( $TERM = "tmux-256color" \) ] && $TUI_EDITOR $selection || exec $GUI_EDITOR $selection
 
 
       else
 
 #I use print to format the array then I use sed to make the output cleaner
-choice=$(printf '%s\n' "${!files[@]}" | sed -e 's/^\/*//g' -e '/-/d' -e '/^home/d' | rofi -dmenu -p "Edit config file:" )
+choice=$(printf '%s\n' "${!files[@]}" | sed -e 's/^\/*//g' -e '/-/d' -e '/^home/d' | run -p "Edit config file:" )
 
 
 #Exit if the choice variable is empty
@@ -104,7 +111,7 @@ choice=$(printf '%s\n' "${!files[@]}" | sed -e 's/^\/*//g' -e '/-/d' -e '/^home/
 
 selection=$(printf '%s\n' "${files[${choice}]}" )
 
-[ \( $TERM = "xterm-color" \) -o \( $TERM = "xterm-256color" \) -o \( $TERM = "xterm-kitty" \)  -o \( $TERM = "tmux-256color" \) ] && vim $selection || exec $gui_editor $selection
+[ \( $TERM = "xterm-color" \) -o \( $TERM = "xterm-256color" \) -o \( $TERM = "xterm-kitty" \)  -o \( $TERM = "tmux-256color" \) ] && $TUI_EDITOR $selection || exec $GUI_EDITOR $selection
 
 
 fi 
