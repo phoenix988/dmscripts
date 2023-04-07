@@ -1,5 +1,5 @@
 #!/bin/bash
-source .config/dm-script.conf
+source $HOME/.dmenu/.config/dm-script.conf
 
 
 sinks=$(pactl list sinks | grep -i source | awk '{print $NF}' | sed 's/.monitor//g' ) 

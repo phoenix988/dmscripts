@@ -1,5 +1,5 @@
 #!/bin/bash
-source .config/dm-script.conf
+source $HOME/.dmenu/.config/dm-script.conf
 choice_bg=$( ls $HOME/Pictures/Wallpapers/ )
 
 

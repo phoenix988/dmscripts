@@ -1,5 +1,5 @@
 #!/bin/bash
-source .config/dm-script.conf
+source $HOME/.dmenu/.config/dm-script.conf
 declare -a options=(
 
 "rainbow_cycle"

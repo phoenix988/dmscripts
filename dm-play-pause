@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-source .config/dm-script.conf
+source $HOME/.dmenu/.config/dm-script.conf
 
 check_back="back"
 while [ $check_back = "back" ] ; do

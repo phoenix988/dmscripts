@@ -1,5 +1,5 @@
 #!/bin/bash
-source .config/dm-script.conf
+source $HOME/.dmenu/.config/dm-script.conf
 theme=$( ls $HOME/.config/urxvt/themes )
 
 export urxvt_link_path=$HOME

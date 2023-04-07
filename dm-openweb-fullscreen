@@ -1,13 +1,11 @@
 #!/bin/bash
-source .config/dm-script.conf
+source $HOME/.dmenu/.config/dm-script.conf
 
-browser="brave-browser"
-url=$(cat $HOME/.config/qutebrowser/quickmarks | sed -e "s/^/(/g" -e "s/ /) /g" | grep -v qute)
+url=$(cat $URL | sed -e "s/^/(/g" -e "s/ /) /g" | grep -v qute)
 
 declare -a options=(
 
 "$url"
-
 
 )
 
@@ -39,7 +37,7 @@ else
   
   convert=$(echo $check_http | sed -e 's/http/https/g')
 
-$browser --new-window --app=$list
+$FULLSCREEN_BROWSER --new-window --app=$list
 
 exit
 
@@ -48,11 +46,11 @@ fi
 if [ -z $check_https ] ; then
 
 
-$browser --new-window --app=https://$list
+$FULLSCREEN_BROWSER --new-window --app=https://$list
 
   else
 
-$browser --new-window --app=$list
+$FULLSCREEN_BROWSER --new-window --app=$list
 
 
 fi

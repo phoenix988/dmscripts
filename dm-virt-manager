@@ -1,5 +1,5 @@
 #!/bin/bash
-source .config/dm-script.conf
+source $HOME/.dmenu/.config/dm-script.conf
 
 
 my_vms=$(virsh -c qemu:///system list --all | awk '{print $2}' | sed -e 's/Name//g' -e '/^$/d' )

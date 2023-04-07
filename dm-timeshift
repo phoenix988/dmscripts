@@ -6,11 +6,12 @@
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 #                                     
 # -*- coding: utf-8 -*-
-#dmenu script to delete or create snapshots using timeshift
-#
-#
 
-source .config/dm-script.conf
+
+
+#dmenu script to delete or create snapshots using timeshift
+
+source $HOME/.dmenu/.config/dm-script.conf
 
 declare -a options=(
 "New-snapshot"

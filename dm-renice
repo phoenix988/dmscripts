@@ -1,5 +1,5 @@
 #!/bin/bash
-source .config/dm-script.conf
+source $HOME/.dmenu/.config/dm-script.conf
 
 #script to change priority of processes
 ps=$( ps ch -eo pid,comm,user,ni | grep $USER )
