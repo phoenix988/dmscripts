@@ -82,9 +82,6 @@ rootoptions[sddm startup]="/usr/share/sddm/scripts/Xsetup"
 rootoptions[rofi themes]="/usr/share/rofi/themes"
 rootoptions[logind]="/etc/systemd/logind.conf"
 
-
-
-
 #This will determine if your root or not
 #If you run this script as root your options will be text files that requires root permissions
 #And also if the choice variable is empty it will just exit the script
