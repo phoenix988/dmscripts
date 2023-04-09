@@ -7,10 +7,12 @@
 # -*- coding: utf-8 -*-
 
 source $HOME/.dmenu/.config/dm-script.conf
+
+[ $DISPLAY_SERVER = "wayland" ] && error
+
 choice_bg=$( ls $HOME/Pictures/Wallpapers/ )
 
 
-echo $choice_bg
 
 
 declare -a options=(

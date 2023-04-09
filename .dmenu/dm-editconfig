@@ -26,6 +26,7 @@ files[awesome autostart]="$HOME/.config/awesome/autostart.sh"
 files[bash]="$HOME/.bashrc"
 files[conky]="$HOME/.config/conky/doomone-qtile.conkyrc"
 files[dm editconfig]="$HOME/.dmenu/dm-editconfig"
+files[dm script.conf]="$HOME/.dmenu/.config/dm-script.conf"
 files[dmenu]="$HOME/.dmenu"
 files[dunst]="$HOME/.config/dunst/dunstrc"
 files[fish]="$HOME/.config/fish/config.fish"
@@ -81,6 +82,9 @@ rootoptions[pacman]="/etc/pacman.conf"
 rootoptions[sddm startup]="/usr/share/sddm/scripts/Xsetup"
 rootoptions[rofi themes]="/usr/share/rofi/themes"
 rootoptions[logind]="/etc/systemd/logind.conf"
+
+
+
 
 #This will determine if your root or not
 #If you run this script as root your options will be text files that requires root permissions
