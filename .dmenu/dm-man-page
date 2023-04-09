@@ -6,7 +6,7 @@
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
 
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 choice=$( man -k . | awk '{ print $1 }' | sed 's/[A-Z]/\L&/g' | run -p "Choose MAN page: ")
 

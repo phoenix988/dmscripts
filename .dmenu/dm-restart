@@ -6,7 +6,7 @@
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
 #Script that will restart your computer or make it sleep
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 declare -a options=(
 

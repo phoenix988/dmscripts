@@ -8,7 +8,7 @@
 #This script will make it easy to change the theme of your system when using a standalone windowmanager. something like qtile for example
 #It supports rofi, kitty, conky, qtile, nvim
 
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 #Declare are the themes thats available
 declare -a options=(

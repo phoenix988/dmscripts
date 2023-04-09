@@ -7,7 +7,7 @@
 # -*- coding: utf-8 -*-
 
 #Script to connect to Nordvpn
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 connect=$(echo "Disconnect" "Quick_Connect" "Random" "Country" | xargs -n1)
 countries=$(nordvpn countries | xargs -n1 | sed -e '/^-/d' -e 's/,//')  
 countries=$(echo $countries  | xargs -n1)

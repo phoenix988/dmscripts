@@ -8,7 +8,7 @@
 
 
 #Source the dm-script config
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 
 #Reads websites from my URL variable

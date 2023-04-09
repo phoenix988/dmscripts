@@ -7,7 +7,7 @@
 # -*- coding: utf-8 -*-
 
 
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 
 #This script will only work for qtile rightnow unless you modify it

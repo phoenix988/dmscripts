@@ -11,7 +11,7 @@
 
 
 #Source the config file for dmscript
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 declare -a options=(
 "New-snapshot"

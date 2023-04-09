@@ -8,7 +8,7 @@
 # -*- coding: utf-8 -*-
 
 #Imports the configuration
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 #will check your username to see if your root or not
 whoami=$(whoami)
@@ -26,14 +26,16 @@ files[awesome autostart]="$HOME/.config/awesome/autostart.sh"
 files[bash]="$HOME/.bashrc"
 files[conky]="$HOME/.config/conky/doomone-qtile.conkyrc"
 files[dm editconfig]="$HOME/.dmenu/dm-editconfig"
-files[dm script.conf]="$HOME/.dmenu/.config/dm-script.conf"
+files[dm script.conf]="$HOME/.config/dm-script.conf"
 files[dmenu]="$HOME/.dmenu"
+files[doom config]="$HOME/.config/doom/config.el"
+files[doom init]="$HOME/.config/doom/init.el"
 files[dunst]="$HOME/.config/dunst/dunstrc"
 files[fish]="$HOME/.config/fish/config.fish"
 files[hyprland]="/home/karl/.config/hypr/hyprland.conf"
 files[kitty]="$HOME/.config/kitty/kitty.conf"
 files[kitty theme]="$HOME/.config/kitty/theme.conf "
-files[lithuanian]="$HOME/lithuanian/learnscript.sh"
+files[language script]="$HOME/myrepos/languagelearning/main.sh"
 files[mutt]="$HOME/.config/mutt/muttrc"
 files[ncspot]="$HOME/.config/ncspot/config.toml"
 files[nvim]="$HOME/.config/nvim/init.vim"

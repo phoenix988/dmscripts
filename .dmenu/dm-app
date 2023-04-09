@@ -5,9 +5,12 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
-source $HOME/.dmenu/.config/dm-script.conf
+# Script that will open applications of my choice
+# using rofi or wofi
+source $HOME/.config/dm-script.conf
 
 
+# set options in dm-script.conf
 declare -a options=(
 
 $applications

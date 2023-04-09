@@ -1,5 +1,5 @@
 #!/bin/bash
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 
 declare -a options=(

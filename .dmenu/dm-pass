@@ -10,7 +10,7 @@
 #To make it easy and convinient to sign in to my services 
 
 #Source the config file
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
 #This will receive all my passwords from the pass password store
 list=$(find  $HOME/.password-store/ -iname "*.gpg" | sed -e 's/.gpg//g' -e 's/\/home\/karl\/.password-store//g' -e 's/\///' | sed -e 's/^karlfredin5@gmail.com//g' -e 's/^karlfredin@hotmail.se//g' -e 's/^phoenix081408@gmail.com//g' -e 's/^karlfredin@gmail.com//g')

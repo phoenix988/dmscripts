@@ -6,9 +6,9 @@
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
 
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 
-source $HOME/.dmenu/.config/dm-script.conf
+source $HOME/.config/dm-script.conf
 number=$(seq 1 100)
 
 choice=$(printf '%s\n' "${number[@]}" | run -p "Fan Speed")
