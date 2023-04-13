@@ -9,8 +9,10 @@
 source $HOME/.config/dm-script.conf
 
 choice=$( find $HOME/Yandex.Disk/ $HOME/.config  -iname "*.pdf"   | run -p "PDF file: " )
- [ -z $choice ] && exit
+ [ -z "$choice" ] && exit
 
-$PDF_VIEWER $choice
+
+echo $choice
+$PDF_VIEWER "$choice"
 
 
