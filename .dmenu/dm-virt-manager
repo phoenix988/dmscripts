@@ -5,35 +5,39 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
-#script to control my virtual machines in qemu
+
+# script to control my virtual machines in qemu
 source $HOME/.config/dm-script.conf
 
-
+# list all of my vms
 my_vms=$(virsh -c qemu:///system list --all | awk '{print $2}' | sed -e 's/Name//g' -e '/^$/d' )
 
-echo $my_vms
-
-
+# Makes your choice
+# Choose the vm you want to run or create a new vm
 choice=$(echo "New-VM" $my_vms | xargs -n1 | run -p 'Choose VM: ')
 
 [ -z $choice ] && exit
 
-[ $choice = "New-VM" ] && virt-manager --show-domain-creator --connect qemu:///system && exit 
+# If you choose to make new vm it runs the virt-manager new vm window and will exit afterwards
+[ "$choice" = "New-VM" ] && virt-manager --show-domain-creator --connect qemu:///system && exit
 
-state=$(virsh list --all | grep $choice | awk '{print $3}') 
+# Checks the state of your choosen vm
+state=$(virsh -c qemu:///system list --all | grep $choice | awk '{print $3}')
 
+# will ask you if you want to start the vm if its not running
+if [ "$state" = "shut" ] ; then
 
-if [ "$state" = "shut" ] ; then  
-    
-    set start_choice (echo "yes" "no" | xargs -n1 | run -p 'VM not running, Do you want to start it ? :')
+    start_choice=$(echo "yes" "no" | xargs -n1 | run -p 'VM not running, Do you want to start it ? :')
 
-[ -z $start_choice ] && exit
+     # Will exit if you don't make a choice
+     [ -z $start_choice ] && exit
 
 fi
 
+# Starts the vm if you did choose yes
 [ "$start_choice" = "yes" ]  && virsh start $choice 
 
-
+# Runs the vm in the virt manager window
 virt-manager --show-domain-console $choice --connect qemu:///system     
 
 
