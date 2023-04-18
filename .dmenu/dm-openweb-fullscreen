@@ -5,37 +5,40 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Dmenu scripts that will open a website from a list of URLs
+# And open them in application mode with zero distractions
+# Only supported by chromium based browsers. Will not work
+# Using a firefox based browser
 
+# source the config
 source $HOME/.config/dm-script.conf
 
+# Creates the URL list
 url=$(cat $URL | sed -e "s/^/(/g" -e "s/ /) /g" | grep -v qute)
 
+# Declares the array
 declare -a options=(
 
-"$url"
+  "$url"
 
 )
 
-
-
-
+# Make your choice
 choice=$(printf '%s\n' "${options[@]}" | run -p "Open Website in fullscreen:")
 
-if [ -z $choice  ] ; then
+# Exit the script if you dont make a choice
+[ -z $choice  ] && exit
 
-    exit 
-
-fi 
-
+# Gets only the url portion of the choice and stores it in list
 list=$(echo $choice | awk '{print $NF}'  )
 
 
+# checks if the url is http or https
 check_https=$(echo $list | grep https )
 check_http=$(echo $list | grep http | grep -v https )
 
-
-
-
+# if the website is http then this IF will convert it to https
+# And open it in choosen browser
 if [ -z $check_http ] ; then 
 
   none="0"
@@ -50,6 +53,10 @@ exit
 
 fi
 
+# this IF checks if the url has HTTPS in front of it
+# If it doesn't have then I am adding it
+# Otherwise if the url has https in front of it then it will just go
+# Ahead and open the website
 if [ -z $check_https ] ; then
 
 
@@ -58,7 +65,6 @@ $FULLSCREEN_BROWSER --new-window --app=https://$list
   else
 
 $FULLSCREEN_BROWSER --new-window --app=$list
-
 
 fi
 

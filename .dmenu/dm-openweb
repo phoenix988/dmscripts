@@ -6,29 +6,20 @@
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
 
-
-#Source the dm-script config
+# Source the dm-script config
 source $HOME/.config/dm-script.conf
 
-
-#Reads websites from my URL variable
-##Configure this in the dm-script config file
+# Reads websites from my URL variable
+# Configure this in the dm-script config file
 LIST=$(cat $URL | sed -e "s/^/(/g" -e "s/ /) /g" )
-
-
 
 choice=$(printf '%s\n' $LIST | xargs -n2 | run -p "Open Website:")
 
-
-
 [ -z "$choice"  ] && exit
-
-
 
 LIST=$(echo $choice | awk '{print $NF}') 
 
-
-#Opening website
+# Opening website
 $BROWSER $LIST
 
 
