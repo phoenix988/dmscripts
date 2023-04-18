@@ -7,29 +7,32 @@
 #                                     
 # -*- coding: utf-8 -*-
 
-#dmenu script to delete or create snapshots using timeshift
+# dmenu script to delete or create snapshots using timeshift
 
 
-#Source the config file for dmscript
+# Source the config file for dmscript
 source $HOME/.config/dm-script.conf
 
+# Options you have available
 declare -a options=(
 "New-snapshot"
 "Remove-snapshot")
 
+# Make your choice
 choice=$(printf '%s\n' "${options[@]}" | run -p "Timeshift Action:")
 
 [ -z $choice ] && exit
 
-[ "$choice" = "New-snapshot" -o "$choice" = "Remove-snapshot" ] || rofi -e "ERROR: Invalid Value"
+# If you choose an invalid value nothing is gonna happen
+[ "$choice" = "New-snapshot" -o "$choice" = "Remove-snapshot" ] || exit
 
+# Runs this statement if you choose to make a new snabshot
 if [ $choice = "New-snapshot" ] ; then
 
-    rofi -e "Creates new snapshot"
     sudo timeshift --create
-fi
 
-if [ $choice = "Remove-snapshot" ] ; then
+# Runs this statement if you choose to remove snabshot
+elif [ $choice = "Remove-snapshot" ] ; then
 
     snapshots=$(sudo timeshift --list | grep "^[0-9]" | grep -v snapshot)
     
@@ -39,7 +42,6 @@ if [ $choice = "Remove-snapshot" ] ; then
     
     snapshot_name=$(echo $choice_snapshot | awk '{print $3}')
     
-    rofi -e "Removes snapshot $snapshot_name"
     sudo timeshift --delete --snapshot "$snapshot_name"
 
 fi

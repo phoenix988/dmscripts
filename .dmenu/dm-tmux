@@ -12,9 +12,24 @@
 # Source the config file for dmscript
 source $HOME/.config/dm-script.conf
 
-# Make your choice
-choice=$(tmux ls | awk '{print $1}' | run -p "Choose TMUX session to open")
+TMUX_SESSIONS=$(tmux ls | awk '{print $1}')
+NEW_TMUX="New"
 
+
+# Make your choice
+choice=$(printf '%s\n' "$NEW_TMUX" "$TMUX_SESSIONS"  | run -p "Choose TMUX session to open")
+
+[ -z $choice ] && exit
+
+# if you choose to make a new session
+if [ "$choice" = "New" ] ; then
+
+$TERM tmux new -t $NAME
+
+else
 
 # run the tmux session in the terminal
 $TERM -e tmux attach -t $choice
+
+
+fi

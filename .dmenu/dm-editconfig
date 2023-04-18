@@ -7,20 +7,17 @@
 #                                     
 # -*- coding: utf-8 -*-
 
-#Imports the configuration
+# Imports the configuration
 source $HOME/.config/dm-script.conf
 
-#will check your username to see if your root or not
-whoami=$(whoami)
-
-#Choose the config files you want quick access to
-#Just add them in the array with this format "NAME - path_to_file"
-#This is files for your regular user
+# Choose the config files you want quick access to
+# Just add them in the array with this format "NAME - path_to_file"
+# This is files for your regular user
 declare -A files
 
 files[abbr]="$HOME/.config/fish/conf.d/abbr.fish"
 files[alacritty]="$HOME/.config/alacritty/alacritty.yml"
-files[alias list]="$HOME/Documents/alias.list"
+files[alias]="$HOME/.config/alias-zsh-bash"
 files[awesome]="$HOME/.config/awesome/rc.lua"
 files[awesome autostart]="$HOME/.config/awesome/autostart.sh"
 files[bash]="$HOME/.bashrc"
@@ -28,12 +25,12 @@ files[conky]="$HOME/.config/conky/main"
 files[dm editconfig]="$HOME/.dmenu/dm-editconfig"
 files[dm script.conf]="$HOME/.config/dm-script.conf"
 files[dmenu]="$HOME/.dmenu"
-files[doom config]="$HOME/.config/doom/config.el"
+files[doom config]="$HOME/.config/doom/README.org"
 files[doom packages]="$HOME/.config/doom/packages.el"
 files[doom init]="$HOME/.config/doom/init.el"
 files[dunst]="$HOME/.config/dunst/dunstrc"
 files[fish]="$HOME/.config/fish/config.fish"
-files[hyprland]="/home/karl/.config/hypr/hyprland.conf"
+files[hyprland]="/home/karl/.config/hypr/README.org"
 files[kitty]="$HOME/.config/kitty/kitty.conf"
 files[kitty theme]="$HOME/.config/kitty/theme.conf "
 files[language script]="$HOME/myrepos/languagelearning/main.sh"
@@ -46,7 +43,7 @@ files[pcmanfm]="$HOME/.config/pcmanfm/default/pcmanfm.conf"
 files[picom]="$HOME/.config/picom/picom.conf"
 files[picom jona]="$HOME/.config/picom/picom-jona.conf"
 files[script]="$HOME/.scripts"
-files[sync script]="$HOME/.scripts/backup-scripts/sync"
+files[sync script]="$HOME/.scripts/sync/sync-script.org"
 files[qtile]="$HOME/.config/qtile/config.py"
 files[qtile autostart]="$HOME/.config/qtile/autostart.sh"
 files[qutebrowser config]="$HOME/.config/qutebrowser/config.py"
@@ -71,61 +68,32 @@ files[xmonad]="$HOME/.xmonad/xmonad.hs"
 files[zsh]="$HOME/.zshrc"
 files[Yandex Disk]="$HOME/.config/yandex-disk/config.cfg"
 
-#This is for files that requires root permissions:
-declare -A rootoptions
+# File that require root permission
+# But it wont open these files as root
+files[autofs auto]="/etc/autofs/auto.mnt"
+files[autofs external]="/etc/autofs/external.mnt"
+files[autofs master]="/etc/autofs/auto.master"
+files[dunst]="/etc/dunst/dunstrc"
+files[exports]="/etc/exports"
+files[fstab]="/etc/fstab"
+files[fish]="/etc/fish/config.fish"
+files[grub]="/etc/default/grub"
+files[host]="/etc/hosts"
+files[lightdm webkit2]="/etc/lightdm/lightdm-webkit2-greeter.conf"
+files[lightdm]="/etc/lightdm/lightdm.conf"
+files[mutt wizard]="/usr/share/mutt-wizard/mutt-wizard.muttrc"
+files[pacman]="/etc/pacman.conf"
+files[sddm startup]="/usr/share/sddm/scripts/Xsetup"
+files[rofi themes]="/usr/share/rofi/themes"
+files[logind]="/etc/systemd/logind.conf"
 
-rootoptions[autofs auto]="/etc/autofs/auto.mnt"
-rootoptions[autofs external]="/etc/autofs/external.mnt"
-rootoptions[autofs master]="/etc/autofs/auto.master"
-rootoptions[dunst]="/etc/dunst/dunstrc"
-rootoptions[exports]="/etc/exports"
-rootoptions[fstab]="/etc/fstab"
-rootoptions[fish]="/etc/fish/config.fish"
-rootoptions[grub]="/etc/default/grub"
-rootoptions[host]="/etc/hosts"
-rootoptions[lightdm webkit2]="/etc/lightdm/lightdm-webkit2-greeter.conf"
-rootoptions[lightdm]="/etc/lightdm/lightdm.conf"
-rootoptions[mutt wizard]="/usr/share/mutt-wizard/mutt-wizard.muttrc"
-rootoptions[pacman]="/etc/pacman.conf"
-rootoptions[sddm startup]="/usr/share/sddm/scripts/Xsetup"
-rootoptions[rofi themes]="/usr/share/rofi/themes"
-rootoptions[logind]="/etc/systemd/logind.conf"
-
-
-
-
-#This will determine if your root or not
-#If you run this script as root your options will be text files that requires root permissions
-#And also if the choice variable is empty it will just exit the script
-if [ $whoami = "root" ] ; then
-
-
-#I use print to format the array 
-choice=$(printf '%s\n' "${!rootoptions[@]}" |  run -p "Edit config file (You are root):" )
-  
-#Exit if the choice variable is empty
-[ -z "$choice" ] && exit
-
-#This will fix the output so only the path to the file will get stored in the variable 
-selection=$(printf '%s\n' "${rootoptions["${choice}"]}" )
-
-[ \( $TERM = "xterm-color" \) -o \( $TERM = "xterm-256color" \) -o \( $TERM = "xterm-kitty" \) -o \( $TERM = "tmux-256color" \) ] && $TUI_EDITOR $selection || exec $GUI_EDITOR $selection
-
-
-      else
-
-#I use print to format the array then I use sed to make the output cleaner
+# I use print to format the array then I use sed to make the output cleaner
 choice=$(printf '%s\n' "${!files[@]}" | sed -e 's/^\/*//g' -e '/-/d' -e '/^home/d' | run -p "Edit config file:" )
 
-
-#Exit if the choice variable is empty
-[ -z "$choice" ] && exit 
+# Exit if you made no choice
+[ -z "$choice" ] && exit
 
 selection=$(printf '%s\n' "${files[${choice}]}" )
 
-[ \( $TERM = "xterm-color" \) -o \( $TERM = "xterm-256color" \) -o \( $TERM = "xterm-kitty" \)  -o \( $TERM = "tmux-256color" \) ] && $TUI_EDITOR $selection || exec $GUI_EDITOR $selection
-
-
-fi 
-
+exec $GUI_EDITOR $selection
 
