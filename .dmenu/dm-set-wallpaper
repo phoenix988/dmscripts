@@ -12,6 +12,7 @@ source $HOME/.config/dm-script.conf
 declare -a options=(
 
 "$HOME/Pictures/Wallpapers"
+"$HOME/Pictures/rose-pine"
 "$HOME/Pictures/Arch"
 "$HOME/Pictures/Nature/"
 "$HOME/Pictures/nord/"

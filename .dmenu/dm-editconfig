@@ -48,7 +48,7 @@ files[qtile]="$HOME/.config/qtile/config.py"
 files[qtile autostart]="$HOME/.config/qtile/autostart.sh"
 files[qutebrowser config]="$HOME/.config/qutebrowser/config.py"
 files[qutebrowser quickmarks]="$HOME/.config/qutebrowser/quickmarks"
-files[rofi themes]="$HOME/.config/rofi/themes"
+files[rofi themes user]="$HOME/.config/rofi/themes"
 files[rtorrent]="$HOME/.rtorrent.rc"
 files[starship]="$HOME/.config/starship.toml"
 files[tmux]="$HOME/.tmux.conf.local"
@@ -84,7 +84,7 @@ files[lightdm]="/etc/lightdm/lightdm.conf"
 files[mutt wizard]="/usr/share/mutt-wizard/mutt-wizard.muttrc"
 files[pacman]="/etc/pacman.conf"
 files[sddm startup]="/usr/share/sddm/scripts/Xsetup"
-files[rofi themes]="/usr/share/rofi/themes"
+files[rofi themes root]="/usr/share/rofi/themes"
 files[logind]="/etc/systemd/logind.conf"
 
 # I use print to format the array then I use sed to make the output cleaner
@@ -96,4 +96,6 @@ choice=$(printf '%s\n' "${!files[@]}" | sed -e 's/^\/*//g' -e '/-/d' -e '/^home/
 selection=$(printf '%s\n' "${files[${choice}]}" )
 
 exec $GUI_EDITOR $selection
+
+
 
