@@ -1,1 +1,23 @@
-#+title: My Dmscripts
+#+title: DMSCRIPTS
+
+
+* ABOUT
+Here I store all my run menu scripts. You can use these scripts with any launcher like dmenu, rofi
+wofi etc. Per default it is configured to use wofi on wayland but if you are using xorg it will fallback to using rofi.
+It will do this automatically. If you want to configure the behaviour of these script tou can mainly do that in dm-script.conf.
+But at the moment not all scripts is using this config fully. But I will keep updating these scripts to make them better since I use
+them everyday to speed up my workflow so they are very useful. You should give them a try if you haven't or write your own since it's
+very easy.
+
+** INSTALL
+If you want to use these script you can simply run these commands
+#+begin_src sh
+
+# Clone repository
+git clone https://github.com/phoenix988/dmscripts.git
+
+# Copy the all the files to the correct location
+cp -r dmscripts/.config/* ~/.config
+cp -r dmscripts/.dmenu ~/.config
+
+#+end_src
