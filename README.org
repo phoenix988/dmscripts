@@ -16,7 +16,7 @@ Commands to run if you wanna try them out
 # Clone repository
 git clone https://github.com/phoenix988/dmscripts.git
 
-# Copy the all the files to the correct location
+# Copy all the files to the correct location
 cp -r dmscripts/.config/* ~/.config
 cp -r dmscripts/.dmenu ~/.config
 
