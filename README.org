@@ -10,7 +10,7 @@ them everyday to speed up my workflow so they are very useful. You should give t
 very easy.
 
 ** INSTALL
-If you want to use these script you can simply run these commands
+Commands to run if you wanna try them out
 #+begin_src sh
 
 # Clone repository
