@@ -6,96 +6,123 @@
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 #                                     
 # -*- coding: utf-8 -*-
+# I don't wanna edit this file that much.
+# since its tedious when you get new files and all that
+# so I just added some files and directories and basically the script will
+# find all files within these directories and let you edit those files
+# so you can dynamically update the files without editing this script
+# but since it's not very fast to find search the file system using find
+# I added a flag -g so when you run the script with that flag it will update the cache
+# and then when you run it normally it will open almost instantly.
+# and basically since I dont want every single file in my config dir to show.
+# I first added my repo in the path and the script will look for all the files I have in my dotfiles repo
+# and then change the path to home please keep in mind that the dir structure of your dir repo needs to match,
+# your home directory for this to work.
 
 # Imports the configuration
 source $HOME/.config/dm-script.conf
 
-# Choose the config files you want quick access to
-# Just add them in the array with this format "NAME - path_to_file"
-# This is files for your regular user
+# Variables for my git repos
+DOTFILES_REPO_PATH="$HOME/myrepos/dotfiles"
+DMSCRIPTS_REPO_PATH="$HOME/myrepos/dmscripts"
+
+
+# Making the array as you can see I dont add that many 
+# files/folders cause I don't wanna edit this script that much
 declare -A files
 
-files[abbr]="$HOME/.config/fish/conf.d/abbr.fish"
-files[alacritty]="$HOME/.config/alacritty/alacritty.yml"
-files[alias]="$HOME/.config/alias-zsh-bash"
-files[awesome]="$HOME/.config/awesome/rc.lua"
-files[awesome autostart]="$HOME/.config/awesome/autostart.sh"
-files[bash]="$HOME/.bashrc"
-files[conky]="$HOME/.config/conky/main"
-files[dm editconfig]="$HOME/.dmenu/dm-editconfig"
-files[dm script.conf]="$HOME/.config/dm-script.conf"
-files[dmenu]="$HOME/.dmenu"
-files[doom config]="$HOME/.config/doom/README.org"
-files[doom packages]="$HOME/.config/doom/packages.el"
-files[doom init]="$HOME/.config/doom/init.el"
-files[dunst]="$HOME/.config/dunst/dunstrc"
-files[fish]="$HOME/.config/fish/config.fish"
-files[hyprland]="/home/karl/.config/hypr/README.org"
-files[kitty]="$HOME/.config/kitty/kitty.conf"
-files[kitty theme]="$HOME/.config/kitty/theme.conf "
-files[language script]="$HOME/myrepos/languagelearning/main.sh"
-files[mutt]="$HOME/.config/mutt/muttrc"
-files[ncspot]="$HOME/.config/ncspot/config.toml"
-files[nvim]="$HOME/.config/nvim/init.vim"
-files[nvim plugins]="$HOME/.config/nvim/vim-plug/plugins.vim"
-files[fish]="$HOME/.config/fish/config.fish"
-files[pcmanfm]="$HOME/.config/pcmanfm/default/pcmanfm.conf"
-files[picom]="$HOME/.config/picom/picom.conf"
-files[picom jona]="$HOME/.config/picom/picom-jona.conf"
-files[script]="$HOME/.scripts"
-files[sync script]="$HOME/.scripts/sync/sync-script.org"
-files[qtile]="$HOME/.config/qtile/config.py"
-files[qtile autostart]="$HOME/.config/qtile/autostart.sh"
-files[qutebrowser config]="$HOME/.config/qutebrowser/config.py"
-files[qutebrowser quickmarks]="$HOME/.config/qutebrowser/quickmarks"
-files[rofi themes user]="$HOME/.config/rofi/themes"
-files[rtorrent]="$HOME/.rtorrent.rc"
-files[starship]="$HOME/.config/starship.toml"
-files[tmux]="$HOME/.tmux.conf.local"
-files[vieb]="$HOME/.config/Vieb/viebrc"
-files[vifm]="$HOME/.config/vifm/vifmrc"
-files[vifm colors]="$HOME/.config/vifm/colors"
-files[waybar config]="$HOME/.config/waybar/config.jsonc"
-files[waybar style]="$HOME/.config/waybar/style.css"
-files[wlogout layout]="$HOME/.config/wlogout/layout"
-files[wlogout style]="$HOME/.config/wlogout/style.css"
-files[wofi config]="$HOME/.config/wofi/config"
-files[wofi style]="$HOME/.config/wofi/style.css"
-files[xmobar1]="$HOME/.config/xmobar/xmobarrc0"
-files[xmobar2]="$HOME/.config/xmobar/xmobarrc1"
-files[xmobar]="$HOME/.config/xmobar/"
-files[xmonad]="$HOME/.xmonad/xmonad.hs"
-files[zsh]="$HOME/.zshrc"
-files[Yandex Disk]="$HOME/.config/yandex-disk/config.cfg"
 
-# File that require root permission
-# But it wont open these files as root
-files[autofs auto]="/etc/autofs/auto.mnt"
-files[autofs external]="/etc/autofs/external.mnt"
-files[autofs master]="/etc/autofs/auto.master"
-files[dunst]="/etc/dunst/dunstrc"
-files[exports]="/etc/exports"
-files[fstab]="/etc/fstab"
-files[fish]="/etc/fish/config.fish"
-files[grub]="/etc/default/grub"
-files[host]="/etc/hosts"
-files[lightdm webkit2]="/etc/lightdm/lightdm-webkit2-greeter.conf"
-files[lightdm]="/etc/lightdm/lightdm.conf"
-files[mutt wizard]="/usr/share/mutt-wizard/mutt-wizard.muttrc"
-files[pacman]="/etc/pacman.conf"
-files[sddm startup]="/usr/share/sddm/scripts/Xsetup"
-files[rofi themes root]="/usr/share/rofi/themes"
-files[logind]="/etc/systemd/logind.conf"
+# Scripts
+files[$HOME/.dmenu]="$DMSCRIPTS_REPO_PATH/.dmenu"
+files[$HOME/.scripts]="$DOTFILES_REPO_PATH/.scripts"
+files[$HOME/.config]="$DOTFILES_REPO_PATH/.config"
+#files[$HOME/.xmonad]="$DOTFILES_REPO_PATH/.xmonad"
 
-# I use print to format the array then I use sed to make the output cleaner
-choice=$(printf '%s\n' "${!files[@]}" | sed -e 's/^\/*//g' -e '/-/d' -e '/^home/d' | run -p "Edit config file:" )
+# dm script config
+files[$HOME/.config/dm-script.conf]="$DMSCRIPTS_REPO_PATH/.config/dm-script.conf"
 
-# Exit if you made no choice
-[ -z "$choice" ] && exit
+# zshrc
+files[$HOME/.zshrc]="$DOTFILES_REPO_PATH/.zshrc"
 
-selection=$(printf '%s\n' "${files[${choice}]}" )
+# Bashrc
+files[$HOME/.bashrc]="$DOTFILES_REPO_PATH/.bashrc"
 
-exec $GUI_EDITOR $selection
+# Tmux
+files[$HOME/.tmux.conf.local]="$DOTFILES_REPO_PATH/.tmux.conf.local"
+
+# etc
+files[/etc]="/etc"
+
+while getopts ":g" opt; do
+  case $opt in
+     g)
+      GENERATE=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+
+if [ "$GENERATE" = "true" ] ; then
+
+for MY_FILES in $(printf '%s\n' "${files[@]}") ; do
+        
+
+   if [ -d $MY_FILES ] ; then
+
+       for MY_FILES_LOOP in $(find  $MY_FILES/* -type f 2> /dev/null ) ; do
+
+           SAVE=$(echo "$MY_FILES_LOOP" | sed -e "s|$DOTFILES_REPO_PATH|$HOME|" -e "s|$DMSCRIPTS_REPO_PATH|$HOME|")
+
+           FILES_TO_USE=$(echo "$SAVE" "$FILES_TO_USE")
+
+       done
+ 
+   elif [ -f $MY_FILES ] ; then    
+
+       for MY_FILES_LOOP in $MY_FILES ; do
+
+           SAVE=$(echo "$MY_FILES_LOOP" | sed -e "s|$DOTFILES_REPO_PATH|$HOME|" -e "s|$DMSCRIPTS_REPO_PATH|$HOME|")
+
+           FILES_TO_USE=$(echo "$SAVE" "$FILES_TO_USE")
+
+       done
+
+   fi
+
+done
+
+       [ -z "$FILES_TO_USE" ] || echo "$FILES_TO_USE" | xargs -n1 > $HOME/.config/dm-editconfig-cache
+
+       choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run -p "Edit config file:" )
+
+       [ -z "$choice" ] && exit
+   
+else
+
+       FILES_TO_USE=$(cat "$HOME/.config/dm-editconfig-cache")
+
+
+       choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run -p "Edit config file:" )
+       
+       # Exit if you made no choice
+       [ -z "$choice" ] && exit
+
+fi 
+
+
+exec $GUI_EDITOR $choice
+
+
+
+
 
 
 
