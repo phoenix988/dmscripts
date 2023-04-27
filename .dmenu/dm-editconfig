@@ -35,7 +35,13 @@ declare -A files
 # Scripts
 files[$HOME/.dmenu]="$DMSCRIPTS_REPO_PATH/.dmenu"
 files[$HOME/.scripts]="$DOTFILES_REPO_PATH/.scripts"
+
+# config files but it will only grabe configs I have in my dotfiles repo
 files[$HOME/.config]="$DOTFILES_REPO_PATH/.config"
+
+# Yandex disk
+files[$HOME/.config/yandex-disk]="$HOME/.config/yandex-disk"
+
 #files[$HOME/.xmonad]="$DOTFILES_REPO_PATH/.xmonad"
 
 # dm script config
@@ -60,6 +66,7 @@ while getopts ":g" opt; do
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
+      echo "Enter -g to regenerate the cache file" >&2
       exit 1
       ;;
     :)
@@ -71,6 +78,8 @@ done
 
 
 if [ "$GENERATE" = "true" ] ; then
+
+echo "Generating Cache file"
 
 for MY_FILES in $(printf '%s\n' "${files[@]}") ; do
         
@@ -98,13 +107,10 @@ for MY_FILES in $(printf '%s\n' "${files[@]}") ; do
    fi
 
 done
-
        [ -z "$FILES_TO_USE" ] || echo "$FILES_TO_USE" | xargs -n1 > $HOME/.config/dm-editconfig-cache
 
-       choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run -p "Edit config file:" )
 
-       [ -z "$choice" ] && exit
-   
+
 else
 
        FILES_TO_USE=$(cat "$HOME/.config/dm-editconfig-cache")
@@ -115,14 +121,6 @@ else
        # Exit if you made no choice
        [ -z "$choice" ] && exit
 
-fi 
+       exec $GUI_EDITOR $choice
 
-
-exec $GUI_EDITOR $choice
-
-
-
-
-
-
-
+fi
