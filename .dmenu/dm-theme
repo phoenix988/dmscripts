@@ -1,0 +1,293 @@
+#!/bin/bash
+##____  _                      _
+#|  _ \| |__   ___   ___ _ __ (_)_  __
+#| |_) | '_ \ / _ \ / _ \ '_ \| \ \/ /
+#|  __/| | | | (_) |  __/ | | | |>  <
+#|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
+# -*- coding: utf-8 -*-
+# This will change theme for various programs
+# Doom Emacs
+# Neovim
+# Dunst
+# Waybar
+# Rofi
+# Wofi
+# Ncspot
+# Qtile
+# Starship
+# GTK theme
+# Kitty
+
+# Imports the configuratitons
+source $HOME/.config/dm-script.conf
+
+# Declare the array
+# Here you enter all the themes you have available to choose
+declare -a options=("nord" "rose-pine" "dracula" "iceberg")
+
+# Make your choice
+choice=$(printf '%s\n' "${options[@]}" | xargs -n1 | run -p "Choose theme")
+
+# Exit if choice is empty
+[ -z $choice ] && exit
+
+# Function to change neovim theme
+function NVIM_THEME(){
+
+   COLOR_PATH=$HOME/.config/nvim/after/plugin/colors.lua
+   
+   # Gets the current theme of neovim to replace
+   REPLACE=$(grep "color or" $COLOR_PATH | awk '{print $NF}' | sed -e 's/"//g')
+
+   # Replace the current neovim theme
+   sed -i "s|$REPLACE|$choice|g" $COLOR_PATH
+
+}
+
+# Function to change qtile theme
+function QTILE_THEME() {
+   
+   # Define qtile paths used 
+   QTILE_THEME_PATH=$HOME/.config/qtile/themes
+   QTILE_THEME=$HOME/.config/qtile/color.py
+   
+   if [ -f "$QTILE_THEME_PATH/$choice.py" ] ; then
+
+      unlink $QTILE_THEME 2> /dev/null
+ 
+      ln -s $QTILE_THEME_PATH/$choice.py $QTILE_THEME
+
+      REPLACE=$(cat $HOME/.config/qtile/README.org | grep pop-os | awk -F "/" '{print $NF}' | sed 's/",//')
+
+      sed -i "s|$REPLACE|pop-os-$choice.png|" $HOME/.config/qtile/README.org
+   
+      emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "/home/karl/.config/qtile/README.org")'
+
+   
+   fi
+
+}
+
+# Function to update wofi theme
+function WOFI_THEME() {
+
+   # Define wofi paths used 
+   WOFI_THEME_PATH=$HOME/.config/wofi/themes
+   WOFI_THEME=$HOME/.config/wofi/style.css
+    
+   if [ -f "$WOFI_THEME_PATH/$choice.css" ] ; then
+
+     unlink $WOFI_THEME 2> /dev/null
+ 
+     ln -s $WOFI_THEME_PATH/$choice.css $WOFI_THEME
+   
+   fi
+
+
+}
+
+
+# Function to update waybar theme
+function WAYBAR_THEME() {
+
+   # Define waybar paths used 
+   WAYBAR_THEME_PATH=$HOME/.config/waybar/themes
+   WAYBAR_THEME=$HOME/.config/waybar/style.css
+    
+   if [ -f "$WAYBAR_THEME_PATH/$choice.css" ] ; then
+     
+       unlink $WAYBAR_THEME 2> /dev/null
+ 
+       ln -s $WAYBAR_THEME_PATH/$choice.css $WAYBAR_THEME
+   fi
+
+}
+
+
+# Function to update starship theme
+function STARSHIP_THEME() {
+
+   # Define waybar paths used 
+   STARSHIP_THEME_PATH=$HOME/.config/starship-themes
+   STARSHIP_THEME=$HOME/.config/starship.toml
+    
+   if [ -f "$STARSHIP_THEME_PATH/$choice.toml" ] ; then
+
+     unlink $STARSHIP_THEME 2> /dev/null
+ 
+     ln -s $STARSHIP_THEME_PATH/$choice.toml $STARSHIP_THEME
+   
+   fi
+
+}
+
+
+function ROFI_THEME() {
+
+   # Define waybar paths used 
+   ROFI_THEME_PATH=$HOME/.config/rofi/themes
+   ROFI_THEME=$HOME/.config/rofi/config.rasi
+   
+
+   if [ -f "$ROFI_THEME_PATH/$choice.rasi" ] ; then
+   
+      # Gets the string to replace
+      REPLACE=$(awk -F / '{print $NF}' $ROFI_THEME | sed 's/"//' | tail -n1)
+  
+      # Replace it with the new theme
+      sed -i "s|$REPLACE|$choice.rasi|" $ROFI_THEME
+ 
+   fi 
+
+
+}
+
+function GTK_THEME() {
+  
+  # Statements that defines the name of the gtk theme  
+  # That the choosen theme will use
+  
+  # Rose Pine 
+  [ "$choice" = "rose-pine" ] && new_choice=RosePine-Main-B
+  [ "$choice" = "rose-pine" ] && icon_choice=Tokyonight-Dark
+  
+  # Nord
+  [ "$choice" = "nord" ] && new_choice=nord
+  [ "$choice" = "nord" ] && icon_choice=NordArc-Icons
+   
+  # Dracula
+  [ "$choice" = "dracula" ] && new_choice=Dracula
+  [ "$choice" = "dracula" ] && icon_choice=Dracula
+
+  # Rose Pine 
+  [ "$choice" = "iceberg" ] && new_choice=RosePine-Main-B
+  [ "$choice" = "iceberg" ] && icon_choice=NordArc-Icons
+
+  if [ -z "$new_choice" ] ; then
+
+   
+     echo "GTK theme is empty" &> /dev/null 
+
+ else
+
+     # Define some variables
+     ROOT_GTK=/etc/environment
+     HOME_GTK=$HOME/.gtkrc-2.0
+
+
+     # Gets the current theme that it will replace with the new one
+     REPLACE_HOME=$( grep gtk-theme-name $HOME_GTK | awk -F '=' '{print $NF}' | sed 's/"//g')
+     REPLACE_ICON=$( grep gtk-icon-theme-name $HOME_GTK | awk -F '=' '{print $NF}' | sed 's/"//g')
+     REPLACE_ROOT=$( grep GTK_THEME $ROOT_GTK | awk -F '=' '{print $NF}')
+
+     # Makes the change
+     sudo sed -i "s|$REPLACE_ROOT|$new_choice|" $ROOT_GTK
+     sudo sed -i "5s|$REPLACE_HOME|$new_choice|" $HOME_GTK
+     sudo sed -i "6s|$REPLACE_ICON|$icon_choice|" $HOME_GTK
+
+  fi
+
+}
+
+# Function to update the theme for kitty
+function KITTY_THEME() {
+
+   # Define waybar paths used 
+   KITTY_THEME_PATH=$HOME/.config/kitty/kitty-themes/themes
+   KITTY_THEME=$HOME/.config/kitty/theme.conf
+    
+   if [ -f "$KITTY_THEME_PATH/$choice.conf" ] ; then
+     
+       unlink $KITTY_THEME 2> /dev/null
+ 
+       ln -s $KITTY_THEME_PATH/$choice.conf $KITTY_THEME
+   
+   fi
+
+
+}
+
+function EMACS_THEME() {
+
+  [ "$choice" = "rose-pine" ] && new_choice=doom-tokyo-night
+  
+  # Nord
+  [ "$choice" = "nord" ] && new_choice=doom-nord-aurora
+   
+  # Dracula
+  [ "$choice" = "dracula" ] && new_choice=doom-dracula
+
+  # Iceberg
+  [ "$choice" = "iceberg" ] && new_choice=doom-horizon
+
+   DOOM_THEME=$HOME/.config/doom/README.org
+
+   REPLACE=$(grep "load-theme" $DOOM_THEME  | awk '{print $2}' | sed "s/'//")
+
+   sed -i "s|$REPLACE|$new_choice|" $DOOM_THEME
+ 
+   emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "/home/karl/.config/doom/README.org")'
+
+
+}
+
+# Function to change theme for ncspot
+function NCSPOT_THEME() {
+
+   # Variables for ncspot
+   NCSPOT_THEME_PATH=$HOME/.config/ncspot/themes
+   NCSPOT_THEME=$HOME/.config/ncspot/config.toml
+
+   # If the theme doesnt exist then it wont unlink the current theme
+   if [ -f $NCSPOT_THEME_PATH/$choice.toml ] ; then
+       
+       unlink $NCSPOT_THEME
+
+       ln -s $NCSPOT_THEME_PATH/$choice.toml $NCSPOT_THEME
+
+
+   fi 
+}
+
+
+# Function to change theme for dunst
+function DUNST_THEME() {
+
+   # Variables for dunst
+   DUNST_THEME_PATH=$HOME/.config/dunst/themes
+   DUNST_THEME=$HOME/.config/dunst/dunstrc
+
+   # If the theme doesnt exist then it wont unlink the current theme
+   if [ -f $DUNST_THEME_PATH/$choice ] ; then
+       
+       unlink $DUNST_THEME
+
+       ln -s $DUNST_THEME_PATH/$choice $DUNST_THEME
+
+
+   fi 
+}
+
+
+# Runs all the functions to change the theme
+NVIM_THEME
+
+QTILE_THEME
+
+WOFI_THEME
+
+WAYBAR_THEME
+
+STARSHIP_THEME
+
+ROFI_THEME
+
+KITTY_THEME
+
+EMACS_THEME
+
+GTK_THEME
+
+DUNST_THEME
+
+NCSPOT_THEME
