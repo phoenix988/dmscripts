@@ -1,4 +1,6 @@
 #+title: DMSCRIPTS
+#+DESCRIPTION: A collection of my dmenu scripts
+#+AUTHOR: Karl Fredin
 
 
 * ABOUT
