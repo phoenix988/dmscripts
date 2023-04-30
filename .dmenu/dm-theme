@@ -149,7 +149,7 @@ function GTK_THEME() {
   
   # Rose Pine 
   [ "$choice" = "rose-pine" ] && new_choice=RosePine-Main-B
-  [ "$choice" = "rose-pine" ] && icon_choice=NordArc-Icons
+  [ "$choice" = "rose-pine" ] && icon_choice=Rose-Pine
   
   # Nord
   [ "$choice" = "nord" ] && new_choice=nord
@@ -161,11 +161,10 @@ function GTK_THEME() {
 
   # IceBerg
   [ "$choice" = "iceberg" ] && new_choice=RosePine-Main-B
-  [ "$choice" = "iceberg" ] && icon_choice=NordArc-Icons
+  [ "$choice" = "iceberg" ] && icon_choice=Rose-Pine
 
   if [ -z "$new_choice" ] ; then
 
-   
      echo "GTK theme is empty" &> /dev/null 
 
  else
@@ -270,6 +269,7 @@ function DUNST_THEME() {
 
 
 # Runs all the functions to change the theme
+# But skips them if the folder doesn't exist
 [ -d $HOME/.config/nvim ] && NVIM_THEME
 [ -d $HOME/.config/qtile ] && QTILE_THEME
 [ -d $HOME/.config/wofi ] && WOFI_THEME
@@ -278,6 +278,6 @@ function DUNST_THEME() {
 [ -d $HOME/.config/rofi ] && ROFI_THEME
 [ -d $HOME/.config/kitty ] && KITTY_THEME
 [ -d $HOME/.config/doom ] && EMACS_THEME
-[ -d $HOME/.config/.gtkrc-2.0 ] && GTK_THEME
+[ -f $HOME/.gtkrc-2.0 ] && GTK_THEME
 [ -d $HOME/.config/dunst ] && DUNST_THEME
 [ -d $HOME/.config/ncspot ] && NCSPOT_THEME
