@@ -35,7 +35,7 @@ if [ "$state" = "shut" ] ; then
 fi
 
 # Starts the vm if you did choose yes
-[ "$start_choice" = "yes" ]  && virsh start $choice 
+[ "$start_choice" = "yes" ]  && virsh -c qemu:///system start $choice
 
 # Runs the vm in the virt manager window
 virt-manager --show-domain-console $choice --connect qemu:///system     

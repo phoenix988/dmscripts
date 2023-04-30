@@ -149,7 +149,7 @@ function GTK_THEME() {
   
   # Rose Pine 
   [ "$choice" = "rose-pine" ] && new_choice=RosePine-Main-B
-  [ "$choice" = "rose-pine" ] && icon_choice=Tokyonight-Dark
+  [ "$choice" = "rose-pine" ] && icon_choice=NordArc-Icons
   
   # Nord
   [ "$choice" = "nord" ] && new_choice=nord
@@ -159,7 +159,7 @@ function GTK_THEME() {
   [ "$choice" = "dracula" ] && new_choice=Dracula
   [ "$choice" = "dracula" ] && icon_choice=Dracula
 
-  # Rose Pine 
+  # IceBerg
   [ "$choice" = "iceberg" ] && new_choice=RosePine-Main-B
   [ "$choice" = "iceberg" ] && icon_choice=NordArc-Icons
 
@@ -209,7 +209,7 @@ function KITTY_THEME() {
 
 function EMACS_THEME() {
 
-  [ "$choice" = "rose-pine" ] && new_choice=doom-tokyo-night
+  [ "$choice" = "rose-pine" ] && new_choice=doom-rose-pine
   
   # Nord
   [ "$choice" = "nord" ] && new_choice=doom-nord-aurora
@@ -218,7 +218,7 @@ function EMACS_THEME() {
   [ "$choice" = "dracula" ] && new_choice=doom-dracula
 
   # Iceberg
-  [ "$choice" = "iceberg" ] && new_choice=doom-horizon
+  [ "$choice" = "iceberg" ] && new_choice=doom-iceberg
 
    DOOM_THEME=$HOME/.config/doom/README.org
 
@@ -270,24 +270,14 @@ function DUNST_THEME() {
 
 
 # Runs all the functions to change the theme
-NVIM_THEME
-
-QTILE_THEME
-
-WOFI_THEME
-
-WAYBAR_THEME
-
-STARSHIP_THEME
-
-ROFI_THEME
-
-KITTY_THEME
-
-EMACS_THEME
-
-GTK_THEME
-
-DUNST_THEME
-
-NCSPOT_THEME
+[ -d $HOME/.config/nvim ] && NVIM_THEME
+[ -d $HOME/.config/qtile ] && QTILE_THEME
+[ -d $HOME/.config/wofi ] && WOFI_THEME
+[ -d $HOME/.config/waybar ] && WAYBAR_THEME
+[ -d $HOME/.config/starship-themes ] && STARSHIP_THEME
+[ -d $HOME/.config/rofi ] && ROFI_THEME
+[ -d $HOME/.config/kitty ] && KITTY_THEME
+[ -d $HOME/.config/doom ] && EMACS_THEME
+[ -d $HOME/.config/.gtkrc-2.0 ] && GTK_THEME
+[ -d $HOME/.config/dunst ] && DUNST_THEME
+[ -d $HOME/.config/ncspot ] && NCSPOT_THEME

@@ -18,11 +18,12 @@ declare -a options=(
 "$HOME/Pictures/Nature/"
 "$HOME/Pictures/nord/"
 "$HOME/Pictures/Dracula/"
+"$HOME/Pictures/nothing/"
 
 
 )
 
-# Removes all the directories thats empty from the option
+# Removes all the directories that's empty from the option
 for opt in "${options[@]}" ; do
 
     check_empty=$(ls $opt/* 2> /dev/null ) 
@@ -31,17 +32,16 @@ for opt in "${options[@]}" ; do
 
 done
 
-
-# Make your choice
+# Make your choice (choose your wallpaper directory)
 choice=$(printf '%s\n' "${wallpapers[@]}" | xargs -n1 |  run -p "Choose your wallpaper" )
 
 # Exit if you make no choice
 [ -z $choice ] && exit
 
-
+# Makes the list of all the backgrounds in the choose directory
 listofbackgrounds=$(ls -d $choice/* )  
 
-#Change background using sxiv
+# Change background using sxiv
 ls $listofbackgrounds | sxiv -i
 
 
