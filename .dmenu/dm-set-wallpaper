@@ -5,6 +5,12 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-set-wallpaper
+# Description: Dm script to change wallpaper in a standalone window manager
+# Author: Karl Fredin
+
+# you need sxiv installed for this script to work because
+# that's what I use to set wallpaper togheter with feh or swaybg
 
 # Imports the configuration
 source $HOME/.config/dm-script.conf

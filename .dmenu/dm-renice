@@ -5,25 +5,31 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-renice
+# Description: Dm script to renice a process
+# Author: Karl Fredin
 
+
+# Imports the configuration
 source $HOME/.config/dm-script.conf
 
-#script to change priority of processes
+# Greps all the processes that is running on your user
 ps=$( ps ch -eo pid,comm,user,ni | grep $USER )
 
-
+# all nice options
 nice_options=$(seq -19 20)
 
-
+# declares the array
 declare -a options=(
 
 "$nice_options"
 
 )
 
-
+# makes the choice
 choice=$(printf '%s\n' "${ps[@]}" | awk '{print $2 " " $NF}' | run  -p "Renice:")
 
+# exit if no choice is made
 [ -z "$choice" ] && exit
 
 choice_nice=$(printf '%s\n' "${options[@]}" | run  -p "choose priority:")

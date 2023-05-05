@@ -5,7 +5,13 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-mount
+# Description: Dm script to mount file systems
+# Author: Karl Fredin
 
+# This only works with mounts in fstab using the noauto option
+
+# Imports the configuration
 source $HOME/.config/dm-script.conf
 
 check_back="Back"

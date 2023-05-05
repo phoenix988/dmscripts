@@ -5,23 +5,24 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-play-pause
+# Description: Dm script to pause play media
+# Author: Karl Fredin
 
+# Source the config file
 source $HOME/.config/dm-script.conf
 
-source $HOME/.config/dm-script.conf
 
 check_back="back"
 while [ $check_back = "back" ] ; do
  
 players=$(playerctl -l)
 
-
-
 choice=$( echo $players "exit" | xargs -n1 | run -p "Choose Instance To Control: " )
 
 [ -z $choice ] && exit
-[ $choice = "exit" ] && exit
 
+[ $choice = "exit" ] && exit
 
 while true ; do
 

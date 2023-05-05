@@ -4,12 +4,14 @@
 #| |_) | '_ \ / _ \ / _ \ '_ \| \ \/ /
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
-# 
-#Dm script to change the audio source
+# Name: dm-audioset
+# Description: Dm script to change the audio source
+# Author: Karl Fredin
 
-
+# source all the configuration
 source $HOME/.config/dm-script.conf
 
+# lists all available sources and stores it in sinks
 sinks=$(pactl list sinks | grep -i source | awk '{print $NF}' | sed 's/.monitor//g' ) 
 
 declare -a options=(
@@ -19,15 +21,16 @@ $sinks
 
 )
 
+# Make your choice
 choice=$(printf '%s\n' "${options[@]}" | sed -e 's/alsa_output.//g' | run -p "Choose Source:"  )
 
-
-
+# exit if no choice is made
 [ -z $choice  ] && exit 
 
-
+# fix the output
 fix_choice=$(echo $choice | sed -e 's/^/alsa_output./g')
 
+# change the audio source
 pactl set-default-sink $fix_choice
 
 

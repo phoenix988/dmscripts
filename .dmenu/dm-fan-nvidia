@@ -5,15 +5,23 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-fan-nvidia
+# Description: Dm script to update fan speed on a nvidia gpu
+# Author: Karl Fredin
 
+# Imports the configuration
 source $HOME/.config/dm-script.conf
 
-source $HOME/.config/dm-script.conf
+# you can choose between 0 to 100% fan speed
 number=$(seq 1 100)
 
+# make the choice
 choice=$(printf '%s\n' "${number[@]}" | run -p "Fan Speed")
 
+# exit if choice is empty
 [ -z $choice ] && exit
 
+# updates the speed
+# please note that you need a fan-control script on your system
 $HOME/.scripts/activated/fan-control.sh set $choice
 

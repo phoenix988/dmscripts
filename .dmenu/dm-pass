@@ -4,10 +4,13 @@
 #| |_) | '_ \ / _ \ / _ \ '_ \| \ \/ /
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
-#                                     
 # -*- coding: utf-8 -*-
-#Rofi script that will copy the choosen password or username for my pass database
-#To make it easy and convinient to sign in to my services 
+# Name: dm-pass
+# Description: Dm script to quickly list your password-store
+# Author: Karl Fredin
+
+# Rofi script that will copy the choosen password or username for my pass database
+# To make it easy and convinient to sign in to my services 
 
 # Source the config file
 source $HOME/.config/dm-script.conf
@@ -35,7 +38,9 @@ if [ $another_choice = "username" ] ; then
 
 
     user=$(echo $choice | awk -F / '{print $NF}')
-   
+  
+  # if you are using wayland it will use wl-copy 
+  # and if you use xorg then it will use xclip
   if [ "$XDG_SESSION_TYPE" = "wayland" ] ; then
 
     wl-copy $user

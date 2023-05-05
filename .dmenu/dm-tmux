@@ -4,15 +4,19 @@
 #| |_) | '_ \ / _ \ / _ \ '_ \| \ \/ /
 #|  __/| | | | (_) |  __/ | | | |>  <
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
-#
-# -*- coding: utf-8 -*-
-#
+# Name: dm-tmux
+# Description: dm script to quikcly open tmux sessions
+# Author: Karl Fredin
+
 # script that easily lets you choose between tmux sessions running on the system
 
 # Source the config file for dmscript
 source $HOME/.config/dm-script.conf
 
+# list all the tmux sessions
 TMUX_SESSIONS=$(tmux ls | awk '{print $1}')
+
+# option if you want to create a new session
 NEW_TMUX="New"
 
 
@@ -24,11 +28,12 @@ choice=$(printf '%s\n' "$NEW_TMUX" "$TMUX_SESSIONS"  | run -p "Choose TMUX sessi
 # if you choose to make a new session
 if [ "$choice" = "New" ] ; then
 
+# creates the new session
 $TERM tmux new -t $NAME
 
 else
 
-# run the tmux session in the terminal
+# Run the tmux session in the terminal
 $TERM -e tmux attach -t $choice
 
 

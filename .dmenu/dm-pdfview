@@ -5,14 +5,20 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-pdfview
+# Description: Dm script to open pdf files on the ssystem
+# Author: Karl Fredin
 
+# Imports the configuration
 source $HOME/.config/dm-script.conf
 
+# make your choice
 choice=$( find $HOME/Yandex.Disk/ $HOME/.config  -iname "*.pdf"   | run -p "PDF file: " )
- [ -z "$choice" ] && exit
 
+# exit if you made no choice
+[ -z "$choice" ] && exit
 
-echo $choice
+# opens the pdf in choosen pdf viewer
 $PDF_VIEWER "$choice"
 
 

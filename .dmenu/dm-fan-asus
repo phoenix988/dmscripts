@@ -5,8 +5,14 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-fan-asus
+# Description: Dm script to change fan mode on an asus laptop
+# Author: Karl Fredin
 
+# Imports the configuration
 source $HOME/.config/dm-script.conf
+
+# declares all the options
 declare -A fanmode
 
 fanmode[Turbo]="1"
@@ -14,15 +20,18 @@ fanmode[Balance]="0"
 fanmode[Silent]="2"
 
 
-
+# make your choice
 choice=$(printf '%s\n' "${!fanmode[@]}" | run -p "Choose Fan Mode")
 
+# exit if choice is empty
 [ -z $choice ] && exit
 
+# recreates the variable
 selection=$(printf '%s\n' "${fanmode["${choice}"]}")
 
+# moves to right directory
 cd /sys/devices/platform/asus-nb-wmi   
 
-
+# updates the fan mode
 sudo sh -c "echo $selection >> throttle_thermal_policy"    
 

@@ -4,6 +4,10 @@
 #| |_) | '_ \ / _ \ / _ \ '_ \| \ \/ /
 #|  __/| | | | (_) |  __/ | | | |>  <
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
+# Name: dm-hub
+# Description: Dm script that will list all my dm-scripts and then you can execute the script
+# Author: Karl Fredin
+
 # Script that will list all my dmscripts
 # and then you can run your script of choice
 
@@ -20,4 +24,5 @@ choice=$(printf '%s\n' "${DMENU_SCRIPT[@]}" | run -p "Run :" )
 # Exit if no choice is made
 [ -z $choice  ] && exit
 
+# runs the choosen script
 bash $choice

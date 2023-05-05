@@ -5,21 +5,29 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-kittychangetheme
+# Description: Dm script to change theme for kitty
+# Author: Karl Fredin
 
+# Imports the configuration
 source $HOME/.config/dm-script.conf
+
+# lists all you available themes
 theme=$( ls $HOME/.config/kitty/kitty-themes/themes )
 
+# kitty directory
 export kittydir=$HOME/.config/kitty
 
-
+# make your choice 
 choice=$(printf '%s\n' "${theme[@]}" | run -p "Choose Theme For Kitty:"   )
 
+# exit if choice is empty
+[ -z $choice ]  && exit
 
- [ -z $choice ]  && exit
-
-
+# removes current theme
 unlink $kittydir/theme.conf      
 
+# updates the theme using a symlink
 ln -s $HOME/.config/kitty/kitty-themes/themes/$choice $HOME/.config/kitty/theme.conf
 
 

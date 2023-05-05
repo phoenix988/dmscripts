@@ -4,20 +4,10 @@
 #| |_) | '_ \ / _ \ / _ \ '_ \| \ \/ /
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
-#                                     
 # -*- coding: utf-8 -*-
-# I don't wanna edit this file that much.
-# since its tedious when you get new files and all that
-# so I just added some files and directories and basically the script will
-# find all files within these directories and let you edit those files
-# so you can dynamically update the files without editing this script
-# but since it's not very fast to find search the file system using find
-# I added a flag -g so when you run the script with that flag it will update the cache
-# and then when you run it normally it will open almost instantly.
-# and basically since I dont want every single file in my config dir to show.
-# I first added my repo in the path and the script will look for all the files I have in my dotfiles repo
-# and then change the path to home please keep in mind that the dir structure of your dir repo needs to match,
-# your home directory for this to work.
+# Name: dm-editconfig
+# Description: Dm script to open various files on the system so you can quickly edit them
+# Author: Karl Fredin
 
 # Imports the configuration
 source $HOME/.config/dm-script.conf
@@ -50,19 +40,25 @@ files[$HOME/.config/dm-script.conf]="$DMSCRIPTS_REPO_PATH/.config/dm-script.conf
 # zshrc
 files[$HOME/.zshrc]="$DOTFILES_REPO_PATH/.zshrc"
 
-# Bashrc
+# bashrc
 files[$HOME/.bashrc]="$DOTFILES_REPO_PATH/.bashrc"
 
-# Tmux
+# tmux
 files[$HOME/.tmux.conf.local]="$DOTFILES_REPO_PATH/.tmux.conf.local"
 
 # etc
 files[/etc]="/etc"
 
-while getopts ":g" opt; do
+# if you use -g then it will generate a cache file
+# which is a most otherwise this script is slow
+# if you use -t the script will use fzf in the terminal
+while getopts ":gt" opt; do
   case $opt in
      g)
       GENERATE=true
+      ;;
+     t)
+      FZF='y'
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -76,7 +72,7 @@ while getopts ":g" opt; do
   esac
 done
 
-
+# generates the cache file
 if [ "$GENERATE" = "true" ] ; then
 
 echo "Generating Cache file"
@@ -107,20 +103,36 @@ for MY_FILES in $(printf '%s\n' "${files[@]}") ; do
    fi
 
 done
-       [ -z "$FILES_TO_USE" ] || echo "$FILES_TO_USE" | xargs -n1 > $HOME/.config/dm-editconfig-cache
-
+        # outputs all files to the cache file, which is basically just a text file 
+        # that contains paths to diffrent files I may want to edit
+        [ -z "$FILES_TO_USE" ] || echo "$FILES_TO_USE" | xargs -n1 | grep -vw png > $HOME/.config/dm-editconfig-cache
 
 
 else
 
        FILES_TO_USE=$(cat "$HOME/.config/dm-editconfig-cache")
 
+       # if you use t flag for terminal the script will use fuzzy finder
+       if [ "$FZF" = "y" ] ;then
 
-       choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run -p "Edit config file:" )
-       
-       # Exit if you made no choice
-       [ -z "$choice" ] && exit
+         choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | fzf )
 
-       exec $GUI_EDITOR $choice
+         # Exit if you made no choice
+         [ -z "$choice" ] && exit
+   
+         
+         # runs using terminal editor
+         $TUI_EDITOR $choice
+
+       else
+
+         choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run -p "Edit config file:" )
+
+         # Exit if you made no choice
+         [ -z "$choice" ] && exit
+          
+         # runs using graphical editor
+         $GUI_EDITOR $choice
+       fi
 
 fi

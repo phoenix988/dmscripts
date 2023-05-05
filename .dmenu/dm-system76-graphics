@@ -5,12 +5,23 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-system76-graphics
+# Description: sets graphic type if you have switchable graphics
+# Author: Karl Fredin
 
+# This requires system 76 power package
+
+# Imports the configurations
 source $HOME/.config/dm-script.conf
+
+# declares the options
 declare -a options=(nvidia integrated compute hybrid)
 
+# make your choice
 choice=$(printf '%s\n' "${options[@]}" | run -p "Choose your graphics mode (Restart required): ")
 
+# exit if choice is empty
 [ -z $choice ] && exit
 
+# sets the power option but it requires a restart
 system76-power graphics $choice

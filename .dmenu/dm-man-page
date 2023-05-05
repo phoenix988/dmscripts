@@ -5,12 +5,16 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-man
+# Description: Dm script to open man pages 
+# Author: Karl Fredin
 
+# Imports the configuration
 source $HOME/.config/dm-script.conf
 
+# Make your choice
 choice=$( man -k . | awk '{ print $1 }' | sed 's/[A-Z]/\L&/g' | run -p "Choose MAN page: ")
 
-
+# opens the man pages in choosen pdf viewer
 man -Tpdf $choice | $PDF_VIEWER -
 
-#yad --text-info  --back=#1e1f28 --fore=#bd92f8 --geometry=1200x800 

@@ -5,6 +5,10 @@
 #|  __/| | | | (_) |  __/ | | | |>  <
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-theme
+# Description: Dm script to quickly change theme
+# Author: Karl Fredin
+
 # This will change theme for various programs
 # Doom Emacs
 # Neovim
@@ -16,6 +20,7 @@
 # Qtile
 # Starship
 # GTK theme
+# GTK Icons
 # Kitty
 
 # Imports the configuratitons
@@ -26,7 +31,7 @@ source $HOME/.config/dm-script.conf
 declare -a options=("nord" "rose-pine" "dracula" "iceberg")
 
 # Make your choice
-choice=$(printf '%s\n' "${options[@]}" | xargs -n1 | run -p "Choose theme")
+[ -z "$1" ] && choice=$(printf '%s\n' "${options[@]}" | xargs -n1 | run -p "Choose theme") || choice="$1"
 
 # Exit if choice is empty
 [ -z $choice ] && exit
@@ -34,6 +39,7 @@ choice=$(printf '%s\n' "${options[@]}" | xargs -n1 | run -p "Choose theme")
 # Function to change neovim theme
 function NVIM_THEME(){
 
+   # config path to my lua to change my neovim theme
    COLOR_PATH=$HOME/.config/nvim/after/plugin/colors.lua
    
    # Gets the current theme of neovim to replace
@@ -50,7 +56,8 @@ function QTILE_THEME() {
    # Define qtile paths used 
    QTILE_THEME_PATH=$HOME/.config/qtile/themes
    QTILE_THEME=$HOME/.config/qtile/color.py
-   
+
+   # If the theme doesnt exist the this wont run
    if [ -f "$QTILE_THEME_PATH/$choice.py" ] ; then
 
       unlink $QTILE_THEME 2> /dev/null
@@ -60,7 +67,8 @@ function QTILE_THEME() {
       REPLACE=$(cat $HOME/.config/qtile/README.org | grep pop-os | awk -F "/" '{print $NF}' | sed 's/",//')
 
       sed -i "s|$REPLACE|pop-os-$choice.png|" $HOME/.config/qtile/README.org
-   
+
+      # Tangles the org document to the config file
       emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "/home/karl/.config/qtile/README.org")'
 
    
@@ -74,7 +82,8 @@ function WOFI_THEME() {
    # Define wofi paths used 
    WOFI_THEME_PATH=$HOME/.config/wofi/themes
    WOFI_THEME=$HOME/.config/wofi/style.css
-    
+
+   # If the theme doesnt exist the this wont run
    if [ -f "$WOFI_THEME_PATH/$choice.css" ] ; then
 
      unlink $WOFI_THEME 2> /dev/null
@@ -93,7 +102,8 @@ function WAYBAR_THEME() {
    # Define waybar paths used 
    WAYBAR_THEME_PATH=$HOME/.config/waybar/themes
    WAYBAR_THEME=$HOME/.config/waybar/style.css
-    
+
+   # If the theme doesnt exist the this wont run
    if [ -f "$WAYBAR_THEME_PATH/$choice.css" ] ; then
      
        unlink $WAYBAR_THEME 2> /dev/null
@@ -110,7 +120,8 @@ function STARSHIP_THEME() {
    # Define waybar paths used 
    STARSHIP_THEME_PATH=$HOME/.config/starship-themes
    STARSHIP_THEME=$HOME/.config/starship.toml
-    
+
+   # If the theme doesnt exist the this wont run
    if [ -f "$STARSHIP_THEME_PATH/$choice.toml" ] ; then
 
      unlink $STARSHIP_THEME 2> /dev/null
@@ -121,14 +132,14 @@ function STARSHIP_THEME() {
 
 }
 
-
+# function to change rofi theme
 function ROFI_THEME() {
 
    # Define waybar paths used 
    ROFI_THEME_PATH=$HOME/.config/rofi/themes
    ROFI_THEME=$HOME/.config/rofi/config.rasi
    
-
+   # If the theme doesnt exist the this wont run
    if [ -f "$ROFI_THEME_PATH/$choice.rasi" ] ; then
    
       # Gets the string to replace
@@ -142,6 +153,7 @@ function ROFI_THEME() {
 
 }
 
+# function to change gtk theme
 function GTK_THEME() {
   
   # Statements that defines the name of the gtk theme  
@@ -163,6 +175,7 @@ function GTK_THEME() {
   [ "$choice" = "iceberg" ] && new_choice=RosePine-Main-B
   [ "$choice" = "iceberg" ] && icon_choice=Rose-Pine
 
+  # If new_choice is empty the script wont change gtk theme
   if [ -z "$new_choice" ] ; then
 
      echo "GTK theme is empty" &> /dev/null 
@@ -194,7 +207,8 @@ function KITTY_THEME() {
    # Define waybar paths used 
    KITTY_THEME_PATH=$HOME/.config/kitty/kitty-themes/themes
    KITTY_THEME=$HOME/.config/kitty/theme.conf
-    
+
+  # If new_choice is empty the script wont change gtk theme
    if [ -f "$KITTY_THEME_PATH/$choice.conf" ] ; then
      
        unlink $KITTY_THEME 2> /dev/null
@@ -206,8 +220,10 @@ function KITTY_THEME() {
 
 }
 
+# Function to change doom emacs theme
 function EMACS_THEME() {
 
+  # Rose pine
   [ "$choice" = "rose-pine" ] && new_choice=doom-rose-pine
   
   # Nord

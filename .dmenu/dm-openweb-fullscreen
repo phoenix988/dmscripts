@@ -5,10 +5,15 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-openweb-fullscreen
+# Description: Dm script to open a website in app mode
+# Author: Karl Fredin
+
 # Dmenu scripts that will open a website from a list of URLs
 # And open them in application mode with zero distractions
 # Only supported by chromium based browsers. Will not work
 # Using a firefox based browser
+
 
 # source the config
 source $HOME/.config/dm-script.conf

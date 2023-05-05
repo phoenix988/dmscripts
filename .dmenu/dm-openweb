@@ -5,6 +5,9 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
+# Name: dm-openweb
+# Description: Dm script to open a wesbite from my url list
+# Author: Karl Fredin
 
 # Source the dm-script config
 source $HOME/.config/dm-script.conf
@@ -13,13 +16,16 @@ source $HOME/.config/dm-script.conf
 # Configure this in the dm-script config file
 LIST=$(cat $URL | sed -e "s/^/(/g" -e "s/ /) /g" )
 
+# make the choice
 choice=$(printf '%s\n' $LIST | xargs -n2 | run -p "Open Website:")
 
+# exit if choice is empty
 [ -z "$choice"  ] && exit
 
+# makes the url
 LIST=$(echo $choice | awk '{print $NF}') 
 
-# Opening website
+# Opening your choice
 $BROWSER $LIST
 
 
