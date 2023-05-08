@@ -283,6 +283,24 @@ function DUNST_THEME() {
    fi 
 }
 
+# Function to change theme for conky
+function CONKY_THEME() {
+
+   # Variables for dunst
+   CONKY_THEME_PATH=$HOME/.config/conky/themes
+   CONKY_THEME=$HOME/.config/conky/main
+
+   # If the theme doesnt exist then it wont unlink the current theme
+   if [ -f $CONKY_THEME_PATH/$choice.conkyrc ] ; then
+       
+       unlink $CONKY_THEME
+
+       ln -s $CONKY_THEME_PATH/$choice.conkyrc $CONKY_THEME
+
+   fi 
+}
+
+
 
 # Runs all the functions to change the theme
 # But skips them if the folder doesn't exist
@@ -294,6 +312,7 @@ function DUNST_THEME() {
 [ -d $HOME/.config/rofi ] && ROFI_THEME
 [ -d $HOME/.config/kitty ] && KITTY_THEME
 [ -d $HOME/.config/doom ] && EMACS_THEME
+[ -d $HOME/.config/conky ] && CONKY_THEME
 [ -f $HOME/.gtkrc-2.0 ] && GTK_THEME
 [ -d $HOME/.config/dunst ] && DUNST_THEME
 [ -d $HOME/.config/ncspot ] && NCSPOT_THEME
