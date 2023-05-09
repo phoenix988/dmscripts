@@ -300,6 +300,14 @@ function CONKY_THEME() {
    fi 
 }
 
+function AWESOME_THEME() {
+
+   AWESOME_THEME=$HOME/.config/awesome/rc.lua
+
+   REPLACE=$(grep "local chosen_theme" $AWESOME_THEME | awk '{print $NF}' | sed 's/"//g')
+
+   sed -i "s|$REPLACE|$choice|" $AWESOME_THEME
+}
 
 
 # Runs all the functions to change the theme
@@ -316,3 +324,4 @@ function CONKY_THEME() {
 [ -f $HOME/.gtkrc-2.0 ] && GTK_THEME
 [ -d $HOME/.config/dunst ] && DUNST_THEME
 [ -d $HOME/.config/ncspot ] && NCSPOT_THEME
+[ -d $HOME/.config/awesome ] && AWESOME_THEME
