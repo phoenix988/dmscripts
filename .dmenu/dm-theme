@@ -10,6 +10,7 @@
 # Author: Karl Fredin
 
 # This will change theme for various programs
+# Awesome 
 # Doom Emacs
 # Neovim
 # Dunst
@@ -28,7 +29,7 @@ source $HOME/.config/dm-script.conf
 
 # Declare the array
 # Here you enter all the themes you have available to choose
-declare -a options=("nord" "rose-pine" "dracula" "iceberg")
+declare -a options=("nord" "rose-pine" "dracula" "iceberg" "tokyo-night")
 
 # Make your choice
 [ -z "$1" ] && choice=$(printf '%s\n' "${options[@]}" | xargs -n1 | run -p "Choose theme") || choice="$1"
@@ -39,6 +40,8 @@ declare -a options=("nord" "rose-pine" "dracula" "iceberg")
 # Function to change neovim theme
 function NVIM_THEME(){
 
+   [ "$choice" = tokyo-night ] && choice="tokyonight-night"
+    
    # config path to my lua to change my neovim theme
    COLOR_PATH=$HOME/.config/nvim/after/plugin/colors.lua
    
@@ -48,6 +51,8 @@ function NVIM_THEME(){
    # Replace the current neovim theme
    sed -i "s|$REPLACE|$choice|g" $COLOR_PATH
 
+   [ "$choice" = "tokyonight-night" ] && choice="tokyo-night"
+
 }
 
 # Function to change qtile theme
@@ -56,6 +61,8 @@ function QTILE_THEME() {
    # Define qtile paths used 
    QTILE_THEME_PATH=$HOME/.config/qtile/themes
    QTILE_THEME=$HOME/.config/qtile/color.py
+   QTILE_ICON=$HOME/.config/qtile/icons
+   QTILE_ICON_PATH=$HOME/.config/qtile/icon.png
 
    # If the theme doesnt exist the this wont run
    if [ -f "$QTILE_THEME_PATH/$choice.py" ] ; then
@@ -64,13 +71,7 @@ function QTILE_THEME() {
  
       ln -s $QTILE_THEME_PATH/$choice.py $QTILE_THEME
 
-      REPLACE=$(cat $HOME/.config/qtile/README.org | grep pop-os | awk -F "/" '{print $NF}' | sed 's/",//')
-
-      sed -i "s|$REPLACE|pop-os-$choice.png|" $HOME/.config/qtile/README.org
-
-      # Tangles the org document to the config file
-      emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "/home/karl/.config/qtile/README.org")'
-
+      ln -sf $QTILE_ICON/pop-os-$choice.png  $QTILE_ICON_PATH
    
    fi
 
@@ -158,6 +159,8 @@ function GTK_THEME() {
   
   # Statements that defines the name of the gtk theme  
   # That the choosen theme will use
+
+  new_choice="" 
   
   # Rose Pine 
   [ "$choice" = "rose-pine" ] && new_choice=RosePine-Main-B
@@ -174,6 +177,11 @@ function GTK_THEME() {
   # IceBerg
   [ "$choice" = "iceberg" ] && new_choice=RosePine-Main-B
   [ "$choice" = "iceberg" ] && icon_choice=Rose-Pine
+
+  # TokyoNight
+  [ "$choice" = "tokyo-night" ] && new_choice=Tokyonight-Dark-B
+  [ "$choice" = "tokyo-night" ] && icon_choice=Tokyonight-Dark-Alt
+
 
   # If new_choice is empty the script wont change gtk theme
   if [ -z "$new_choice" ] ; then
@@ -223,6 +231,8 @@ function KITTY_THEME() {
 # Function to change doom emacs theme
 function EMACS_THEME() {
 
+  new_choice="" 
+
   # Rose pine
   [ "$choice" = "rose-pine" ] && new_choice=doom-rose-pine
   
@@ -234,6 +244,9 @@ function EMACS_THEME() {
 
   # Iceberg
   [ "$choice" = "iceberg" ] && new_choice=doom-iceberg
+  
+ # TokyoNight
+  [ "$choice" = "tokyo-night" ] && new_choice=doom-tokyo-night
 
    DOOM_THEME=$HOME/.config/doom/README.org
 
