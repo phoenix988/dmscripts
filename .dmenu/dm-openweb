@@ -17,7 +17,7 @@ source $HOME/.config/dm-script.conf
 LIST=$(cat $URL | sed -e "s/^/(/g" -e "s/ /) /g" )
 
 # make the choice
-choice=$(printf '%s\n' $LIST | xargs -n2 | run -p "Open Website:")
+choice=$(printf '%s\n' $LIST | xargs -n2 | run "Website:")
 
 # exit if choice is empty
 [ -z "$choice"  ] && exit

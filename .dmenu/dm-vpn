@@ -14,7 +14,7 @@
 source $HOME/.config/dm-script.conf
 
 # Make your first choice
-choice=$(printf '%s\n' "${connect[@]}" | run  -p "Option:" )
+choice=$(printf '%s\n' "${connect[@]}" | run  "Vpn" )
 
 # Exit if you dont make a choice
 [ -z $choice ] && exit

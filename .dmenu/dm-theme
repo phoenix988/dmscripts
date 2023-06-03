@@ -32,7 +32,7 @@ source $HOME/.config/dm-script.conf
 declare -a options=("nord" "rose-pine" "dracula" "iceberg" "tokyo-night")
 
 # Make your choice
-[ -z "$1" ] && choice=$(printf '%s\n' "${options[@]}" | xargs -n1 | run -p "Choose theme") || choice="$1"
+[ -z "$1" ] && choice=$(printf '%s\n' "${options[@]}" | xargs -n1 | run  "theme") || choice="$1"
 
 # Exit if choice is empty
 [ -z $choice ] && exit

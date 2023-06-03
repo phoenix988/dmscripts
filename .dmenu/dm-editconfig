@@ -126,7 +126,7 @@ else
 
        else
 
-         choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run -p "Edit config file:" )
+         choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run "config file" )
 
          # Exit if you made no choice
          [ -z "$choice" ] && exit

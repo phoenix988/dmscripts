@@ -22,7 +22,7 @@ $sinks
 )
 
 # Make your choice
-choice=$(printf '%s\n' "${options[@]}" | sed -e 's/alsa_output.//g' | run -p "Choose Source:"  )
+choice=$(printf '%s\n' "${options[@]}" | sed -e 's/alsa_output.//g' | run "Audio Source"  )
 
 # exit if no choice is made
 [ -z $choice  ] && exit 

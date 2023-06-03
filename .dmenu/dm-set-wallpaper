@@ -39,7 +39,7 @@ for opt in "${options[@]}" ; do
 done
 
 # Make your choice (choose your wallpaper directory)
-choice=$(printf '%s\n' "${wallpapers[@]}" | xargs -n1 |  run -p "Choose your wallpaper" )
+choice=$(printf '%s\n' "${wallpapers[@]}" | xargs -n1 |  run "wallpaper" )
 
 # Exit if you make no choice
 [ -z $choice ] && exit

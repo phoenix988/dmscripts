@@ -29,7 +29,7 @@ declare -a options=(
 )
 
 # Make your choice
-choice=$(printf '%s\n' "${options[@]}" | run -p "Open Website in fullscreen:")
+choice=$(printf '%s\n' "${options[@]}" | run "Website in fullscreen:")
 
 # Exit the script if you dont make a choice
 [ -z $choice  ] && exit

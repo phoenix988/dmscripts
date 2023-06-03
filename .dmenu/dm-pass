@@ -25,13 +25,13 @@ declare -a user_or_password=( "username" "password" )
 declare -a options=($list)
 
 # the run menu where you make your choice
-choice=$(printf '%s\n' "${options[@]}" | run -p "<" )
+choice=$(printf '%s\n' "${options[@]}" | run "<" )
 
 # Will exit the script if choice is empty
 [ -z "$choice" ] && exit 
 
 # Choose if you want to copy username or password
-another_choice=$(printf '%s\n' "${user_or_password[@]}" | run -p "<")
+another_choice=$(printf '%s\n' "${user_or_password[@]}" | run "<")
 
 
 if [ $another_choice = "username" ] ; then

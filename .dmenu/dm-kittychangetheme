@@ -19,7 +19,7 @@ theme=$( ls $HOME/.config/kitty/kitty-themes/themes )
 export kittydir=$HOME/.config/kitty
 
 # make your choice 
-choice=$(printf '%s\n' "${theme[@]}" | run -p "Choose Theme For Kitty:"   )
+choice=$(printf '%s\n' "${theme[@]}" | run "kitty theme"   )
 
 # exit if choice is empty
 [ -z $choice ]  && exit
