@@ -27,7 +27,7 @@ declare -a options=(
 )
 
 # makes the choice
-choice=$(printf '%s\n' "${ps[@]}" | awk '{print $2 " " $NF}' | run  -p "Renice:")
+choice=$(printf '%s\n' "${ps[@]}" | awk '{print $2 " " $NF}' | run "Renice:")
 
 # exit if no choice is made
 [ -z "$choice" ] && exit

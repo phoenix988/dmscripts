@@ -315,9 +315,9 @@ function CONKY_THEME() {
 
 function AWESOME_THEME() {
 
-   AWESOME_THEME=$HOME/.config/awesome/themes/default/theme.lua
+   AWESOME_THEME=$HOME/.config/awesome/activate_theme.lua
 
-   REPLACE=$(grep "local chosen_theme" $AWESOME_THEME | awk '{print $NF}' | sed 's/"//g')
+   REPLACE=$(grep "theme.chosen_theme" $AWESOME_THEME | awk '{print $NF}' | sed 's/"//g')
 
    sed -i "s|$REPLACE|$choice|" $AWESOME_THEME
 }

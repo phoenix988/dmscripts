@@ -13,7 +13,7 @@
 source $HOME/.config/dm-script.conf
 
 # make your choice
-choice=$( find $HOME/Yandex.Disk/ $HOME/.config  -iname "*.pdf"   | run -p "PDF file: " )
+choice=$( find $HOME/Yandex.Disk/ $HOME/.config  -iname "*.pdf"   | run "PDF file: " )
 
 # exit if you made no choice
 [ -z "$choice" ] && exit

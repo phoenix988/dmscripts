@@ -18,7 +18,7 @@ while [ $check_back = "back" ] ; do
  
 players=$(playerctl -l)
 
-choice=$( echo $players "exit" | xargs -n1 | run -p "Choose Instance To Control: " )
+choice=$( echo $players "exit" | xargs -n1 | run "Choose Instance To Control: " )
 
 [ -z $choice ] && exit
 
@@ -26,7 +26,7 @@ choice=$( echo $players "exit" | xargs -n1 | run -p "Choose Instance To Control:
 
 while true ; do
 
-play_pause=$( printf "play\npause\nnext\nprevious\nback\nexit" | run -p "What action do you want to perform: ?")
+play_pause=$( printf "play\npause\nnext\nprevious\nback\nexit" | run "Action ")
 
 check_back="$play_pause"
 

@@ -19,7 +19,7 @@ DMENU_PATH=$HOME/.dmenu
 DMENU_SCRIPT=$(ls $DMENU_PATH)
 
 # Makes your choice
-choice=$(printf '%s\n' "${DMENU_SCRIPT[@]}" | run -p "Run :" )
+choice=$(printf '%s\n' "${DMENU_SCRIPT[@]}" | run "Run :" )
 
 # Exit if no choice is made
 [ -z $choice  ] && exit

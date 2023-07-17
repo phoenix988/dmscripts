@@ -20,7 +20,7 @@ declare -a options=(
 )
 
 # make your choice
-choice=$(printf '%s\n' "${options[@]}" | run  -p "Choose Layout:" )
+choice=$(printf '%s\n' "${options[@]}" | run "Layout " )
 
 # sets the layout of your choice
 setxkbmap $choice

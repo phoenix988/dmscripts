@@ -18,12 +18,12 @@ declare -a options=(
 "Remove-snapshot")
 
 # Make your choice
-choice=$(printf '%s\n' "${options[@]}" | run -p "Timeshift Action:")
+choice=$(printf '%s\n' "${options[@]}" | run "Timeshift Action:")
 
 [ -z $choice ] && exit
 
 # If you choose an invalid value nothing is gonna happen
-[ "$choice" = "New-snapshot" -o "$choice" = "Remove-snapshot" ] || exit
+[ "$choice" = "New-snapshot" -o "$choice" = "Remove-snapshot " ] || exit
 
 # Runs this statement if you choose to make a new snabshot
 if [ $choice = "New-snapshot" ] ; then
@@ -35,7 +35,7 @@ elif [ $choice = "Remove-snapshot" ] ; then
 
     snapshots=$(sudo timeshift --list | grep "^[0-9]" | grep -v snapshot)
     
-    choice_snapshot=$(printf '%s\n' "${snapshots[@]}" | run -p "Snapshot to remove" )
+    choice_snapshot=$(printf '%s\n' "${snapshots[@]}" | run "Snapshot to remove " )
     
     [ -z $choice_snapshot ] && exit
     

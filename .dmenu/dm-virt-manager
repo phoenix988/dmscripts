@@ -16,7 +16,7 @@ my_vms=$(virsh -c qemu:///system list --all | awk '{print $2}' | sed -e 's/Name/
 
 # Makes your choice
 # Choose the vm you want to run or create a new vm
-choice=$(echo "New-VM" $my_vms | xargs -n1 | run -p 'Choose VM: ')
+choice=$(echo "New-VM" $my_vms | xargs -n1 | run 'Choose VM: ')
 
 [ -z $choice ] && exit
 
@@ -29,7 +29,7 @@ state=$(virsh -c qemu:///system list --all | grep $choice | awk '{print $3}')
 # will ask you if you want to start the vm if its not running
 if [ "$state" = "shut" ] ; then
 
-    start_choice=$(echo "yes" "no" | xargs -n1 | run -p 'VM not running, Do you want to start it ? :')
+    start_choice=$(echo "yes" "no" | xargs -n1 | run 'VM not running, start it ? ')
 
      # Will exit if you don't make a choice
      [ -z $start_choice ] && exit

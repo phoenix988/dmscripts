@@ -21,7 +21,7 @@ NEW_TMUX="New"
 
 
 # Make your choice
-choice=$(printf '%s\n' "$NEW_TMUX" "$TMUX_SESSIONS"  | run -p "Choose TMUX session to open")
+choice=$(printf '%s\n' "$NEW_TMUX" "$TMUX_SESSIONS"  | run "TMUX session ")
 
 [ -z $choice ] && exit
 

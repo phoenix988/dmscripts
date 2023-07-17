@@ -23,4 +23,4 @@ choice=$(printf '%s\n' "${connect[@]}" | run  "Vpn" )
 [ "$choice" = "Disconnect" ] && vpn_disconnect
 [ "$choice" = "Connect" ] && vpn_connect
 [ "$choice" = "Random" ] && vpn_random
-[ "$choice" = "Country" ] && choice=$(printf '%s\n' "${options[@]}" |  run -p "Choose Country:" ) && vpn_country
+[ "$choice" = "Country" ] && choice=$(printf '%s\n' "${options[@]}" |  run "Choose Country:" ) && vpn_country

@@ -86,7 +86,7 @@ files[rofi themes root]="/usr/share/rofi/themes"
 files[logind]="/etc/systemd/logind.conf"
 
 # I use print to format the array then I use sed to make the output cleaner
-choice=$(printf '%s\n' "${!files[@]}" | sed -e 's/^\/*//g' -e '/-/d' -e '/^home/d' | run -p "Edit config file:" )
+choice=$(printf '%s\n' "${!files[@]}" | sed -e 's/^\/*//g' -e '/-/d' -e '/^home/d' | run "Edit config file:" )
 
 # Exit if you made no choice
 [ -z "$choice" ] && exit

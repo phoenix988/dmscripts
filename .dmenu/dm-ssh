@@ -23,7 +23,7 @@ declare -a options=(
 )
 
 # make your choice here
-choice=$(printf '%s\n' "${options[@]}" | run -p "Server to connect to: " )
+choice=$(printf '%s\n' "${options[@]}" | run -p "SSH " )
 
 # exit if you don't make a choice
 [ -z $choice ] && exit

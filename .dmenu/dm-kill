@@ -15,7 +15,7 @@ source $HOME/.config/dm-script.conf
 ps=$( ps ch -eo pid,comm,user | grep $USER )
 
 
-choice=$(printf '%s\n' "${ps[@]}" | awk '{print $2}' | run  -p "Kill:")
+choice=$(printf '%s\n' "${ps[@]}" | awk '{print $2}' | run "Kill ")
 
 [ -z $choice ] && exit
 
