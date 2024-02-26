@@ -23,6 +23,8 @@
 # GTK theme
 # GTK Icons
 # Kitty
+# Hyprland
+# Yazi file manager
 
 # Imports the configuratitons
 source $HOME/.config/dm-script.conf
@@ -35,7 +37,7 @@ declare -a options=("nord" "rose-pine" "dracula" "iceberg" "tokyo-night")
 [ -z "$1" ] && choice=$(printf '%s\n' "${options[@]}" | xargs -n1 | run  "theme") || choice="$1"
 
 # Exit if choice is empty
-[ -z $choice ] && exit
+[ -z "$choice" ] && exit
 
 # Function to change neovim theme
 function NVIM_THEME(){
@@ -313,6 +315,17 @@ function CONKY_THEME() {
    fi 
 }
 
+function YAZI_THEME() {
+   # Variables for dunst
+   YAZI_THEME_PATH=$HOME/.config/yazi/themes
+   YAZI_THEME=$HOME/.config/yazi/theme.toml
+
+
+   # link the choosen theme
+   ln -sf $YAZI_THEME_PATH/$choice.toml $YAZI_THEME
+
+}
+
 function AWESOME_THEME() {
 
    AWESOME_THEME=$HOME/.config/awesome/activate_theme.lua
@@ -320,6 +333,17 @@ function AWESOME_THEME() {
    REPLACE=$(grep "theme.chosen_theme" $AWESOME_THEME | awk '{print $NF}' | sed 's/"//g')
 
    sed -i "s|$REPLACE|$choice|" $AWESOME_THEME
+}
+
+function HYPRLAND_THEME() {
+
+   HYPRLAND_THEME=$HOME/.config/hypr/hyprland.conf
+
+   REPLACE=$(grep -e "^source"  "$HYPRLAND_THEME" | grep themes | awk -F / '{print $NF}')
+
+   sed -i "s|$REPLACE|$choice.conf|" $HYPRLAND_THEME
+
+
 }
 
 
@@ -338,3 +362,5 @@ function AWESOME_THEME() {
 [ -d $HOME/.config/dunst ] && DUNST_THEME
 [ -d $HOME/.config/ncspot ] && NCSPOT_THEME
 [ -d $HOME/.config/awesome ] && AWESOME_THEME
+[ -d $HOME/.config/hypr ] && HYPRLAND_THEME
+[ -d $HOME/.config/yazi ] && YAZI_THEME

@@ -24,7 +24,7 @@ declare -a options=(
 "$HOME/Pictures/Nature/"
 "$HOME/Pictures/nord/"
 "$HOME/Pictures/Dracula/"
-"$HOME/Pictures/nothing/"
+"$HOME/Pictures/animation/"
 
 
 )

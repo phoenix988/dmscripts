@@ -22,14 +22,10 @@ export kittydir=$HOME/.config/kitty
 choice=$(printf '%s\n' "${theme[@]}" | run "kitty theme"   )
 
 # exit if choice is empty
-[ -z $choice ]  && exit
+[ -z "$choice" ]  && exit
 
 # removes current theme
-unlink $kittydir/theme.conf      
+unlink "$kittydir/theme.conf"      
 
 # updates the theme using a symlink
-ln -s $HOME/.config/kitty/kitty-themes/themes/$choice $HOME/.config/kitty/theme.conf
-
-
-
-
+ln -s "$HOME/.config/kitty/kitty-themes/themes/$choice" "$kittydir/theme.conf"

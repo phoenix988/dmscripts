@@ -12,28 +12,27 @@
 # Source the config file
 source $HOME/.config/dm-script.conf
 
-
 check_back="back"
 while [ $check_back = "back" ] ; do
  
-players=$(playerctl -l)
+       players=$(playerctl -l)
+       
+       choice=$( echo $players "exit" | xargs -n1 | run "Choose Instance To Control: " )
+       
+       [ -z $choice ] && exit
+       
+       [ $choice = "exit" ] && exit
 
-choice=$( echo $players "exit" | xargs -n1 | run "Choose Instance To Control: " )
+       while true ; do
 
-[ -z $choice ] && exit
+          play_pause=$( printf "play\npause\nnext\nprevious\nback\nexit" | run "Action ")
+          
+          check_back="$play_pause"
+          
+          [ $play_pause = "exit" ] && exit
+          [ $play_pause = "back" ] && break
+          
+          playerctl $play_pause -p $choice
 
-[ $choice = "exit" ] && exit
-
-while true ; do
-
-play_pause=$( printf "play\npause\nnext\nprevious\nback\nexit" | run "Action ")
-
-check_back="$play_pause"
-
-[ $play_pause = "exit" ] && exit
-[ $play_pause = "back" ] && break
-
-playerctl $play_pause -p $choice
-
-done
+       done
 done

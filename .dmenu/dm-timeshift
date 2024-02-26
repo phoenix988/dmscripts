@@ -9,38 +9,113 @@
 # Author: Karl Fredin
 
 
-# Source the config file for dmscript
+# Source my custom settings
 source $HOME/.config/dm-script.conf
 
-# Options you have available
-declare -a options=(
-"New-snapshot"
-"Remove-snapshot")
+# Constants
+divider="---------"
+goback="Back"
+delete="Delete"
+exit="Exit"
 
-# Make your choice
-choice=$(printf '%s\n' "${options[@]}" | run "Timeshift Action:")
-
-[ -z $choice ] && exit
-
-# If you choose an invalid value nothing is gonna happen
-[ "$choice" = "New-snapshot" -o "$choice" = "Remove-snapshot " ] || exit
-
-# Runs this statement if you choose to make a new snabshot
-if [ $choice = "New-snapshot" ] ; then
-
+# Create snapshot 
+create_snapshot() {
     sudo timeshift --create
+}
 
-# Runs this statement if you choose to remove snabshot
-elif [ $choice = "Remove-snapshot" ] ; then
+# Deletes snapshot
+delete_snapshot() {
+    sudo timeshift --delete --snapshot "$1"
+}
 
-    snapshots=$(sudo timeshift --list | grep "^[0-9]" | grep -v snapshot)
-    
-    choice_snapshot=$(printf '%s\n' "${snapshots[@]}" | run "Snapshot to remove " )
-    
-    [ -z $choice_snapshot ] && exit
-    
-    snapshot_name=$(echo $choice_snapshot | awk '{print $3}')
-    
-    sudo timeshift --delete --snapshot "$snapshot_name"
+# Restore snapshot
+restore_snapshot() {
+    device=$(sudo timeshift --list | grep "Device" | awk '{print $NF}')
+    sudo timeshift --restore --snapshot "$1" --device $device
+}
 
-fi
+# A submenu that list all snapshots
+snapshot_menu() {
+
+    restore="Restore"
+    
+    if [ -z "$snapshot" ] ; then
+       snapshot=$(echo "$chosen" | awk '{print $3}')
+    else
+       snapshot=$(echo "$chosen")
+    fi
+
+    options="$snapshot\n$divider\n$restore\n$delete\n$goback\n$exit"
+
+    # Open rofi menu, read chosen option
+    chosen="$(echo -e "$options" | $rofi_command )"
+
+    check="$snapshot"
+
+    # Match chosen option to command
+    case "$chosen" in
+        "" | "$divider")
+            echo "No option chosen."
+            ;;
+        "$delete")
+            remove=$(echo "$snapshot" | awk '{print $3}')
+            delete_snapshot "$remove"
+            show_menu
+            ;;
+        "$restore")
+            restore_snapshot
+            ;;
+        "$check")
+            chosen="$check"
+            snapshot_menu
+            ;;
+        "$goback")
+            show_menu
+            ;;
+        "$exit")
+            exit
+            ;;
+    esac
+}
+
+# Opens a rofi menu so you can remove the snapshots
+# Or restore the snapshot (Not implemented yet)
+show_menu() {
+    # Get menu options
+    snapshot=$(sudo timeshift --list | grep "^[1-9]" | grep -v snapshots)
+    create="Create"
+    list="List"
+
+    # Options passed to rofi
+    options="$snapshot\n$divider\n$create\n$exit"
+
+    # Open rofi menu, read chosen option
+    chosen="$(echo -e "$options" | $rofi_command "Timeshift")"
+    
+    # Exit the menu
+    [ "$chosen" = "Exit" ] && exit
+    
+    # Match chosen option to command
+    case "$chosen" in
+        "" | "$divider")
+            echo "No option chosen."
+            ;;
+        "$create")
+            create_snapshot
+            show_menu
+            ;;
+        "$chosen")
+            snapshot_menu
+            chosen_snapshot=$(sudo timeshift --list | grep "$chosen")
+            ;;
+    esac
+}
+
+# Rofi command to pipe into, can add any options here
+rofi_command=run
+
+case "$1" in
+    *)  # Run the main menu 
+        show_menu
+        ;;
+esac

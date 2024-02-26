@@ -5,8 +5,8 @@
 #|  __/| | | | (_) |  __/ | | | |>  < 
 #|_|   |_| |_|\___/ \___|_| |_|_/_/\_\
 # -*- coding: utf-8 -*-
-# Name: dm-kittychangetheme
-# Description: Dm script to change theme for kitty
+# Name: dm-starship-theme
+# Description: Dm script to change theme for starship prompt
 # Author: Karl Fredin
 
 # Imports the configuration
