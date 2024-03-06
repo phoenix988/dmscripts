@@ -122,17 +122,17 @@ else
    
          
          # runs using terminal editor
-         $TUI_EDITOR $choice
+         $TUI_EDITOR "$choice"
 
        else
 
-         choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run "config file" )
+         choice=$(printf '%s\n' "${FILES_TO_USE[@]}" | xargs -n1 | run "Config Files " )
 
          # Exit if you made no choice
          [ -z "$choice" ] && exit
           
          # runs using graphical editor
-         $GUI_EDITOR $choice
+         $GUI_EDITOR "$choice"
        fi
 
 fi

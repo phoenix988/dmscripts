@@ -28,6 +28,7 @@
 
 # Imports the configuratitons
 source $HOME/.config/dm-script.conf
+SCRIPT_PATH="$HOME/.scripts"
 
 # Declare the array
 # Here you enter all the themes you have available to choose
@@ -48,10 +49,10 @@ function NVIM_THEME(){
    COLOR_PATH=$HOME/.config/nvim/after/plugin/colors.lua
    
    # Gets the current theme of neovim to replace
-   REPLACE=$(grep "color or" $COLOR_PATH | awk '{print $NF}' | sed -e 's/"//g')
+   REPLACE=$(grep "color or" "$COLOR_PATH" | awk '{print $NF}' | sed -e 's/"//g')
 
    # Replace the current neovim theme
-   sed -i "s|$REPLACE|$choice|g" $COLOR_PATH
+   sed -i "s|$REPLACE|$choice|g" "$COLOR_PATH"
 
    [ "$choice" = "tokyonight-night" ] && choice="tokyo-night"
 
@@ -69,7 +70,7 @@ function QTILE_THEME() {
    # If the theme doesnt exist the this wont run
    if [ -f "$QTILE_THEME_PATH/$choice.py" ] ; then
 
-      unlink $QTILE_THEME 2> /dev/null
+      unlink "$QTILE_THEME" 2> /dev/null
  
       ln -s $QTILE_THEME_PATH/$choice.py $QTILE_THEME
 
@@ -341,7 +342,7 @@ function HYPRLAND_THEME() {
 
    REPLACE=$(grep -e "^source"  "$HYPRLAND_THEME" | grep themes | awk -F / '{print $NF}')
 
-   sed -i "s|$REPLACE|$choice.conf|" $HYPRLAND_THEME
+   sed -i "s|$REPLACE|$choice.conf|" "$HYPRLAND_THEME"
 
 
 }
@@ -349,18 +350,19 @@ function HYPRLAND_THEME() {
 
 # Runs all the functions to change the theme
 # But skips them if the folder doesn't exist
-[ -d $HOME/.config/nvim ] && NVIM_THEME
-[ -d $HOME/.config/qtile ] && QTILE_THEME
-[ -d $HOME/.config/wofi ] && WOFI_THEME
-[ -d $HOME/.config/waybar ] && WAYBAR_THEME
-[ -d $HOME/.config/starship-themes ] && STARSHIP_THEME
-[ -d $HOME/.config/rofi ] && ROFI_THEME
-[ -d $HOME/.config/kitty ] && KITTY_THEME
-[ -d $HOME/.config/doom ] && EMACS_THEME
-[ -d $HOME/.config/conky ] && CONKY_THEME
-[ -f $HOME/.gtkrc-2.0 ] && GTK_THEME
-[ -d $HOME/.config/dunst ] && DUNST_THEME
-[ -d $HOME/.config/ncspot ] && NCSPOT_THEME
-[ -d $HOME/.config/awesome ] && AWESOME_THEME
-[ -d $HOME/.config/hypr ] && HYPRLAND_THEME
-[ -d $HOME/.config/yazi ] && YAZI_THEME
+[ -d "$HOME/.config/nvim" ] && NVIM_THEME
+[ -d "$HOME/.config/qtile" ] && QTILE_THEME
+[ -d "$HOME/.config/wofi" ] && WOFI_THEME
+[ -d "$HOME/.config/waybar" ] && WAYBAR_THEME
+[ -d "$HOME/.config/starship-themes" ] && STARSHIP_THEME
+[ -d "$HOME/.config/rofi" ] && ROFI_THEME
+[ -d "$HOME/.config/kitty" ] && KITTY_THEME
+[ -d "$HOME/.config/doom" ] && EMACS_THEME
+[ -d "$HOME/.config/conky" ] && CONKY_THEME
+[ -f "$HOME/.gtkrc-2.0" ] && GTK_THEME
+[ -d "$HOME/.config/dunst" ] && DUNST_THEME
+[ -d "$HOME/.config/ncspot" ] && NCSPOT_THEME
+[ -d "$HOME/.config/awesome" ] && AWESOME_THEME
+[ -d "$HOME/.config/hypr" ] && HYPRLAND_THEME
+[ -d "$HOME/.config/yazi" ] && YAZI_THEME
+[ "$XDG_SESSION_TYPE" = "wayland" ] && "$SCRIPT_PATH/restart/waybar-restart" 
