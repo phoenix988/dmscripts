@@ -15,39 +15,69 @@
 # Imports the configuration
 source $HOME/.config/dm-script.conf
 
+# Sets variables
+divider="---------"
+exit="Exit"
+
 # Creates the array that list all options
 declare -a options=(
-
-"$HOME/Pictures/Wallpapers"
-"$HOME/Pictures/rose-pine"
-"$HOME/Pictures/Arch"
-"$HOME/Pictures/Nature/"
-"$HOME/Pictures/nord/"
-"$HOME/Pictures/Dracula/"
-"$HOME/Pictures/animation/"
-
-
+    "$HOME/Pictures/Wallpapers"
+    "$HOME/Pictures/rose-pine"
+    "$HOME/Pictures/Arch"
+    "$HOME/Pictures/Nature/"
+    "$HOME/Pictures/nord/"
+    "$HOME/Pictures/Dracula/"
+    "$HOME/Pictures/animation/"
 )
 
+
+# Main functions
+list_wallpapers() {
 # Removes all the directories that's empty from the option
 for opt in "${options[@]}" ; do
 
-    check_empty=$(ls $opt/* 2> /dev/null ) 
+    check_empty=$(ls "$opt"/* 2> /dev/null ) 
      
-    [ -z "$check_empty" ] || wallpapers=$(echo $wallpapers $opt)
+    [ -z "$check_empty" ] || wallpapers=$(printf '%s\n' "$wallpapers" "$opt")
 
 done
 
+# Sets the ooption available for the user
+opt=$(printf '%s\n' "${wallpapers[@]}")
+
 # Make your choice (choose your wallpaper directory)
-choice=$(printf '%s\n' "${wallpapers[@]}" | xargs -n1 |  run "wallpaper " )
+choice=$(printf '%s\n' "${opt[@]}" |  $rofi_command )
+
+# Case statement
+case "$choice" in
+        "" | "$divider")
+            # exit if no option is chosen
+            echo "No option chosen."
+            ;;
+        "$choice")
+            
+            # Makes the list of all the backgrounds in the choose directory
+            # And Change background using sxiv if you choose
+            ls -d "$choice"/* | sxiv -i
+
+            list_wallpapers
+            ;;
+esac
+
 
 # Exit if you make no choice
-[ -z $choice ] && exit
+# [ -z "$choice" ] && exit
 
-# Makes the list of all the backgrounds in the choose directory
-listofbackgrounds=$(ls -d $choice/* )  
+}
 
-# Change background using sxiv
-ls $listofbackgrounds | sxiv -i
+rofi_command=run
+
+
+case "$1" in
+    *)  # Run the main menu 
+        list_wallpapers
+        ;;
+esac
+
 
 

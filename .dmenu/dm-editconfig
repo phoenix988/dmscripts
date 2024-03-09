@@ -16,11 +16,9 @@ source $HOME/.config/dm-script.conf
 DOTFILES_REPO_PATH="$HOME/myrepos/dotfiles"
 DMSCRIPTS_REPO_PATH="$HOME/myrepos/dmscripts"
 
-
 # Making the array as you can see I dont add that many 
 # files/folders cause I don't wanna edit this script that much
 declare -A files
-
 
 # Scripts
 files[$HOME/.dmenu]="$DMSCRIPTS_REPO_PATH/.dmenu"
@@ -52,27 +50,26 @@ files[/etc]="/etc"
 # if you use -g then it will generate a cache file
 # which is a most otherwise this script is slow
 # if you use -t the script will use fzf in the terminal
-while getopts ":gt" opt; do
-  case $opt in
-     g)
-      GENERATE=true
-      ;;
-     t)
-      FZF='y'
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      echo "Enter -g to regenerate the cache file" >&2
-      exit 1
-      ;;
-    :)
-      echo "Option -$OPTARG requires an argument." >&2
-      exit 1
-      ;;
-  esac
-done
+# these options are set in the config file now
+# so no need to specify them here
+# while getopts ":gth" opt; do
+#   case $opt in
+#      g) GENERATE=true;;
+#      t) FZF='y' ;;
+#      h) HELP_INFO ;;
+#     \?)
+#       echo "Invalid option: -$OPTARG" >&2
+#       echo "Enter -g to regenerate the cache file" >&2
+#       exit 1
+#       ;;
+#     :)
+#       echo "Option -$OPTARG requires an argument." >&2
+#       exit 1
+#       ;;
+#   esac
+# done
 
-# generates the cache file
+# Generates the cache file
 if [ "$GENERATE" = "true" ] ; then
 
 echo "Generating Cache file"
